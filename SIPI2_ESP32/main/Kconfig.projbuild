@@ -1,0 +1,9 @@
+menu "SIPI2 Configuration"
+
+    config BLUE_HID_DEVICE_NAME
+        string "Blue HID Device Name"
+        default "SIPI2_HID"
+        help
+          Set the device name of the Bluetooth HID device.
+    
+endmenu

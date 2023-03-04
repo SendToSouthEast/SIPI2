@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "UART.C": "cpp"
+    },
+    "cmake.configureOnOpen": false
+}

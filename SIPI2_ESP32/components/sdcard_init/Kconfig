@@ -1,0 +1,105 @@
+menu "SDcard Init Configuration"
+
+    choice SD_INIT_INTERFACE
+        prompt "SD Interface"
+        default SD_INIT_INTERFACE_VSPI
+        help
+            The screen uses the HSPI bus by default. If the VSPI bus is selected, a separate pin is required.
+            If the HSPI bus is selected, the SPI bus is shared with the screen.
+
+    
+        config SD_INIT_INTERFACE_VSPI
+            bool "VSPI"
+            
+        config SD_INIT_INTERFACE_HSPI
+            bool "HSPI"  
+    
+        config SD_INIT_INTERFACE_SDMMC
+            bool "SDMMC"
+    
+    endchoice
+    
+    if SD_INIT_INTERFACE_VSPI || SD_INIT_INTERFACE_SDMMC
+        config SD_FORMAT_IF_MOUNT_FAILED
+            bool "Format the card if mount failed"
+            default n
+            help
+                If this config item is set, format_if_mount_failed will be set to true and the card will be formatted if
+                the mount has failed.
+    endif
+
+    if SD_INIT_INTERFACE_VSPI
+    
+        config SD_PIN_NUM_MISO
+            int "MISO GPIO number"
+            default 4
+    
+        config SD_PIN_NUM_MOSI
+            int "MOSI GPIO number"
+            default 17
+    
+        config SD_PIN_NUM_CLK
+            int "CLK GPIO number"
+            default 16
+    
+    endif
+
+    if SD_INIT_INTERFACE_HSPI || SD_INIT_INTERFACE_VSPI
+
+        config SD_PIN_NUM_CS
+            int "CS GPIO number"
+            default 32
+
+    endif
+    
+    if SD_INIT_INTERFACE_SDMMC
+    
+        choice SDMMC_BUS_WIDTH
+            prompt "SD/MMC bus width"
+            default SDMMC_BUS_WIDTH_4
+            help
+                Select the bus width of SD or MMC interface.
+                Note that even if 1 line mode is used, D3 pin of the SD card must have a pull-up resistor connected.
+                Otherwise the card may enter SPI mode, the only way to recover from which is to cycle power to the card.
+    
+            config SDMMC_BUS_WIDTH_4
+                bool "4 lines (D0 - D3)"
+    
+            config SDMMC_BUS_WIDTH_1
+                bool "1 line (D0)"
+        endchoice
+    
+        if SOC_SDMMC_USE_GPIO_MATRIX
+    
+            config SDMMC_PIN_CMD
+                int "CMD GPIO number"
+                default 35 if IDF_TARGET_ESP32S3
+    
+            config SDMMC_PIN_CLK
+                int "CLK GPIO number"
+                default 36 if IDF_TARGET_ESP32S3
+    
+            config SDMMC_PIN_D0
+                int "D0 GPIO number"
+                default 37 if IDF_TARGET_ESP32S3
+    
+            if SDMMC_BUS_WIDTH_4
+    
+                config SDMMC_PIN_D1
+                    int "D1 GPIO number"
+                    default 38 if IDF_TARGET_ESP32S3
+    
+                config SDMMC_PIN_D2
+                    int "D2 GPIO number"
+                    default 33 if IDF_TARGET_ESP32S3
+    
+                config SDMMC_PIN_D3
+                    int "D3 GPIO number"
+                    default 34 if IDF_TARGET_ESP32S3
+    
+            endif  # SDMMC_BUS_WIDTH_4
+    
+        endif  # SOC_SDMMC_USE_GPIO_MATRIX
+    
+    endif
+endmenu
