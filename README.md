@@ -4,9 +4,9 @@
 
 ![图片](README/1.jpg)
 
-<!--注：以上图片为旧版硬件SIPI2.0-->
+<u>注：以上图片为旧版硬件SIPI2.0</u>
 
-160*128 LCD  SPI屏幕，SPI/SDMMC内存卡存储单词内容，30余个按键全键输入，9*x9.5迷你大小，硬件软件全部开源。
+160x128 LCD  SPI屏幕，SPI/SDMMC内存卡存储单词内容，30余个按键全键输入，9x9.5迷你大小，硬件软件全部开源。
 
 作者比较忙，**欢迎各位提交PR，有问题提issue**。git上的issue硬件软件问题都能问，硬件在这里提供json（JLCEDA PCB文件）和gerber。另在立创广场开源硬件项目。
 
@@ -122,7 +122,7 @@ AB
 
 讯飞输入法效果如图
 
-![图片](README/2.jpg)
+<img src="README/2.jpg" alt="图片" style="zoom:33%;" />
 
 ## 硬件说明
 
@@ -134,7 +134,7 @@ AB
 
 STC8单片机扫描键盘并通过串口2发送给ESP32。
 
-#### 重要物料bom
+#### 重要物料BOM
 
 并未有任何推广，你如果能在淘宝或者哪里买到更便宜的当然更好
 
@@ -154,12 +154,12 @@ STC8单片机扫描键盘并通过串口2发送给ESP32。
 
 文件共有四个主文件夹（项目）
 
-| 文件夹          | 说明                                         | 语言/IDE/平台        |
-| --------------- | -------------------------------------------- | -------------------- |
-| DICTprocess_py  | 将字典数据库处理为一个索引文件和一个数据文件 | python               |
-| hardware_JLCEDA | 硬件文件                                     | 嘉立创EDA            |
-| keyboard_STC8   | 键盘扫描程序，向主控串口发送数据             | Keil STC8H1K         |
-| SIPI2_ESP32     | 主控（ESP32）程序                            | Vscode ESPIDF v4.4.2 |
+| 文件夹          | 说明                                               | 语言/IDE/平台        |
+| --------------- | -------------------------------------------------- | -------------------- |
+| DICTprocess_py  | 将字典数据库处理为一个索引文件和一个数据文件的脚本 | python               |
+| hardware_JLCEDA | 硬件文件                                           | 嘉立创EDA            |
+| keyboard_STC8   | 键盘扫描程序，向主控串口发送数据                   | Keil STC8H1K         |
+| SIPI2_ESP32     | 主控（ESP32）程序                                  | Vscode ESPIDF v4.4.2 |
 
 其中字典处理的数据库来自[skywind3000/ECDICT](https://github.com/skywind3000/ECDICT)
 
@@ -268,11 +268,31 @@ sdcard_init是我写的component，引脚配置和模式选择在menuconfig中�
 
 2.将五向开关利用起来
 
+3.你想做什么功能欢迎提交称为贡献者
+
 ## 开源许可
 
 本项目采用MIT开源协议。同时也希望其它esp32项目多开源。
 
 但是，请勿将我的项目搬运上传码云等平台。
+
+## 鸣谢
+
+[skywind3000/ECDICT: Free English to Chinese Dictionary Database (github.com)](https://github.com/skywind3000/ECDICT)
+
+[lvgl/lvgl: Embedded graphics library to create beautiful UIs for any MCU, MPU and display type. It's boosted by a professional yet affordable drag and drop UI editor, called SquareLine Studio. (github.com)](https://github.com/lvgl/lvgl)
+
+[lvgl/lvgl_esp32_drivers: Drivers for ESP32 to be used with LVGL (github.com)](https://github.com/lvgl/lvgl_esp32_drivers)
+
+[lvgl/lv_fs_if: LVGL interfaces to various file systems (PC, FatFS) (github.com)](https://github.com/lvgl/lv_fs_if)
+
+[espressif/esp-idf: Espressif IoT Development Framework. Official development framework for Espressif SoCs. (github.com)](https://github.com/espressif/esp-idf)
+
+[FreeRTOS/FreeRTOS: 'Classic' FreeRTOS distribution. Started as Git clone of FreeRTOS SourceForge SVN repo. Submodules the kernel. (github.com)](https://github.com/FreeRTOS/FreeRTOS)
+
+fatfs
+
+感谢[ahzvenol (灵弦) (github.com)](https://github.com/ahzvenol) 的帮助
 
 ## 赞助作者
 
@@ -280,6 +300,6 @@ sdcard_init是我写的component，引脚配置和模式选择在menuconfig中�
 
 ……家境贫寒……无电子词典可买……徒手搓之……
 
-<img src="README/image-20230304180453814.png" alt="image-20230304180453814" style="zoom:50%;" />
+<img src="README/image-20230304180453814.png" alt="image-20230304180453814" style="zoom: 33%;" />
 
-<img src="README/image-20230304180616397.png" alt="image-20230304180616397" style="zoom:50%;" />
+<img src="README/image-20230304180616397.png" alt="image-20230304180616397" style="zoom: 33%;" />
