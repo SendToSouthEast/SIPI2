@@ -4,6 +4,7 @@
 idf_component_register(
     SRCS "main.c"
          "init.c"
+         "arial.c"
          "simhei.c"
          "scenes/dictScene.c"
          "scenes/wordScene.c"
