@@ -63,9 +63,9 @@ void getWord(uint32_t seek){
 
     lv_fs_file_t f;
 	lv_fs_res_t res;
-    char outPutWord[50];
+    char outPutWord[50] = {0};
     uint16_t outPutWordSeek = 0;
-	char outPutText[1000];
+	char outPutText[1000] = {0};
     uint16_t outPutTextSeek = 0;
 
 	res = lv_fs_open(&f, DICT_PATH, LV_FS_MODE_RD);
