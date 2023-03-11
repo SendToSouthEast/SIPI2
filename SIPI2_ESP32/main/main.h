@@ -24,6 +24,7 @@
 
 
 const lv_font_t simhei;
+const lv_font_t arial;
 uint8_t scene;
 
 #endif // __MAIN_H__
