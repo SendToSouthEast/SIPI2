@@ -4,8 +4,11 @@
 idf_component_register(
     SRCS "main.c"
          "init.c"
-         "arial.c"
-         "simhei.c"
+        
+         "fonts_imgs/simhei.c"
+         "fonts_imgs/arial.c"
+         "fonts_imgs/but_but2.c"
+
          "scenes/dictScene.c"
          "scenes/wordScene.c"
          "scenes/HIDScene.c"
@@ -21,6 +24,7 @@ idf_component_register(
     PRIV_INCLUDE_DIRS
         "."
         "scenes"
+        "fonts_imgs"
         "srcs"
         "srcs/blueHID"
         "srcs/englishDict"

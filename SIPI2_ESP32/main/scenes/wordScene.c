@@ -5,6 +5,9 @@
 
 static const char *TAG = "SIPI2_WORDSCENE";
 
+
+LV_IMG_DECLARE(but_but2);
+
 // 获取指定索引的单词并显示
 //@param seek 单词在字典中的索引
 void getWord(uint32_t seek);
@@ -33,6 +36,7 @@ void wordSceneInit(char* target){
     lv_obj_set_style_text_font(wordLabel, &arial, 0);
     lv_obj_set_width(wordLabel, 160);
     lv_label_set_recolor(wordLabel,1);
+    lv_label_set_text(wordLabel, NULL);
     lv_label_set_long_mode(wordLabel, LV_LABEL_LONG_WRAP);
     lv_obj_set_pos(wordLabel,0,0);
 
@@ -57,7 +61,16 @@ void wordSceneNOEvent(){
 
 void getWord(uint32_t seek){
     if(seek == 0){
-        lv_label_set_text(meaningLabel, "但是...但是...我没有找到...\n实在很抱歉呐...\n也许，你可以在其它地方查查看...");
+        // 创建一个图片控件
+        lv_obj_t * img = lv_img_create(lv_scr_act());
+
+        // 设置图片源
+        lv_img_set_src(img, &but_but2);
+        lv_obj_set_pos(img, 0, 0);
+
+
+        lv_label_set_text(meaningLabel, "但是...但是...我没有找到..\n实在很抱歉呐...\n也许，你可以在其它地方查查看...");
+        lv_obj_set_pos(meaningLabel,0,80);
         return;
     }
 
