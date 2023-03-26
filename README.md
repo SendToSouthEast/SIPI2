@@ -313,6 +313,10 @@ fatfs
 
 感谢[ahzvenol (灵弦) (github.com)](https://github.com/ahzvenol) 的帮助
 
+感谢同学lsy帮我在notfound界面画的loli和给我起的外号（，）
+
+能不能不要再叫我「但是loli」了喂！！
+
 ## 赞助作者
 
 想喝一杯奶茶……可以吗
