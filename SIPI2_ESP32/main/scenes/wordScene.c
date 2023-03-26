@@ -62,7 +62,7 @@ void wordSceneNOEvent(){
 void getWord(uint32_t seek){
     if(seek == 0){
         // 创建一个图片控件
-        lv_obj_t * img = lv_img_create(lv_scr_act());
+        lv_obj_t * img = lv_img_create(wordScene);
 
         // 设置图片源
         lv_img_set_src(img, &but_but2);
@@ -70,7 +70,7 @@ void getWord(uint32_t seek){
 
 
         lv_label_set_text(meaningLabel, "但是...但是...我没有找到..\n实在很抱歉呐...\n也许，你可以在其它地方查查看...");
-        lv_obj_set_pos(meaningLabel,0,80);
+        lv_obj_set_pos(meaningLabel,0,76);
         return;
     }
 

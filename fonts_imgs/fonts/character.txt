@@ -1,3 +1,8 @@
+https://lvgl.io/tools/fontconverter
+https://lvgl.io/tools/imageconverter
+
+
+
 0x4E00-0x9FA5
 
 !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~@
