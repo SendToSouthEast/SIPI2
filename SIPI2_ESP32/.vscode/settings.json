@@ -38,7 +38,7 @@
         "scenes.h": "c"
     },
     "idf.adapterTargetName": "esp32",
-    "idf.portWin": "COM9",
+    "idf.portWin": "COM3",
     "idf.flashType": "UART",
     "cmake.configureOnOpen": true
 }
