@@ -5,3 +5,7 @@
 SIPI2_ESP32/build
 SIPI2_ESP32/sdkconfig.old
 SIPI2_ESP32/main/donotuse.txt
+
+/DICTprocess_py/dic.txt
+/DICTprocess_py/index.txt
+/DICTprocess_py/unsort_index.txt
