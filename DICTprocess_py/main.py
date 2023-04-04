@@ -5,11 +5,11 @@ treedice = {}
 dic = []
 dicdata = []
 f2 = open('dic.txt','w',encoding='utf-8')
-f3 = open('index.txt','w',encoding='utf-8')
-f3.write("aaaaaaaaaaaaaaa\n")
+f3 = open('unsort_index.txt','w',encoding='utf-8')
+
 with open('ecdict.csv', 'r',encoding="utf-8") as f:
     reader = csv.reader(f)
-    #print(type(reader))
+    print(type(reader))
     ii = 0
     ia = 0
     lastword = "1"
@@ -23,43 +23,6 @@ with open('ecdict.csv', 'r',encoding="utf-8") as f:
         #             #print("属于句子，剔除",row[0],row[3])
 
 
-        # if "[化]" in row[3]:
-        #     if row[3].count("[") == 1:
-        #         flag = True
-        #
-        # if "[医]" in row[3]:
-        #     if row[3].count("[") == 1:
-        #         flag = True
-        #
-        #     elif "[化]" in row[3]:
-        #         flag = True
-        # if "[电]" in row[3]:
-        #     if row[3].count("[") == 1:
-        #         flag = True
-        #
-        # if "[机]" in row[3]:
-        #     if row[3].count("[") == 1:
-        #         flag = True
-        #
-        # if "[法]" in row[3]:
-        #     if row[3].count("[") == 1:
-        #         flag = True
-        #
-        # if "[植]" in row[3]:
-        #     if row[3].count("[") == 1:
-        #         flag = True
-        # if "（人名）" in row[3]:
-        #     if row[3].count("\n") == 0:
-        #         flag = True
-        # if "[人名]" in row[3]:
-        #     if row[3].count("\n") == 0:
-        #         flag = True
-        # if "药)" in row[3]:
-        #     if row[3].count("\n") == 0:
-        #         flag = True
-        # if "[生化" in row[3]:
-        #     if row[3].count("\n") == 0:
-        #         flag = True
         # if ")人名" in row[3]:
         #     if row[3].count("\n") == 0:
         #         flag = True
@@ -72,28 +35,12 @@ with open('ecdict.csv', 'r',encoding="utf-8") as f:
         if len(row[0]) < 2:
             flag = True
         for ba in row[0]:
-            if (ba in "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz") == False:
+            if ord(ba) > 128:
                 #print(row)
                 flag = True
         if len(row[0]) >= 20:
             flag = True
-        # if row[3].count("[") == 1:
-        #         flag = True
-        # if "[]" in row[3]:
-        #     if row[3].count("\n") == 0:
-        #         flag = True
-        # if "[]" in row[3]:
-        #     if row[3].count("\n") == 0:
-        #         flag = True
 
-            # if len(row[1]) < 2:
-            #     print(row)
-
-            # if lastword != row[0][0].lower():
-            #     thisword = row[0][0].lower()
-            #     os.makedirs("1/thisword")
-            #     with open("lastword", 'w') as file_obj:
-            #         json.dump(names, file_obj)
         if flag == False:
             #dicdata = [row[0],row[1],row[2],row[3],row[10],row[7]]//词语，音标，英文释义，中文释义，等级，变形
             dicdata = [row[0], row[1], row[3], row[7]]
@@ -115,8 +62,25 @@ with open('ecdict.csv', 'r',encoding="utf-8") as f:
     f3.seek(0)
     f3.write(str(seek))
     f2.close()
-
     f3.close()
+
+# 打开原始文件和输出文件
+with open('unsort_index.txt', 'r') as f_in, open('index.txt', 'w') as f_out:
+    # 读取原始文件的每一行
+    lines = f_in.readlines()
+    
+    # 按照逗号前的单词的每个字母编码大小进行排序
+    sorted_lines = sorted(lines, key=lambda line: [ord(char) for char in line.split(',')[0]])
+    
+    # 将排序后的结果写入输出文件中
+
+    f_out.write("aaaaaaaaaaaaaaa\n")
+    for line in sorted_lines:
+        f_out.write(line)
+    seek = f_out.tell() + 15
+    f_out.seek(0)
+    f_out.write(str(seek))
+
 
 
 
