@@ -40,7 +40,7 @@ void guiTask(void *p){
 
     uint32_t size_in_px = DISP_BUF_SIZE;
     lv_disp_draw_buf_init(&disp_buf, buf1, buf2, size_in_px);
-    lv_disp_drv_t disp_drv;
+    static lv_disp_drv_t disp_drv;
     lv_disp_drv_init(&disp_drv);
     disp_drv.hor_res = LV_HOR_RES_MAX; //横向分辨率
     disp_drv.ver_res = LV_VER_RES_MAX; //纵向分辨率

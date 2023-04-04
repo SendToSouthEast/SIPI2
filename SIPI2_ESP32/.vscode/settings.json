@@ -35,7 +35,8 @@
         "lvgl_helpers.h": "c",
         "config.h": "c",
         "englishdict.h": "c",
-        "scenes.h": "c"
+        "scenes.h": "c",
+        "lv_timer.h": "c"
     },
     "idf.adapterTargetName": "esp32",
     "idf.portWin": "COM3",
