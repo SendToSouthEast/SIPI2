@@ -12,7 +12,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/event_groups.h"
 #include "freertos/semphr.h"
-#include "lvgl.h"
+#include "lvgl/lvgl.h"
 #include "lvgl_helpers.h"
 #include "lv_fs_if.h"
 #include "esp_system.h"

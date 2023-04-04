@@ -1,0 +1,6 @@
+[submodule "SIPI2_ESP32/components/lvgl/lvgl"]
+	path = SIPI2_ESP32/components/lvgl/lvgl
+	url = https://github.com/lvgl/lvgl.git
+[submodule "SIPI2_ESP32/components/lvgl"]
+	path = SIPI2_ESP32/components/lvgl
+	url = https://github.com/lvgl/lvgl.git
