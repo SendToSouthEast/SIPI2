@@ -2,15 +2,12 @@
 
 #include "main.h"
 
+static const char *TAG = "SIPI2_ENGLISHDICT";
+
 // 将字符串转换为整数
 //@param str 待转换的字符串
 //@return 转换后的整数
 static uint32_t strToInt(const char* str);
-
-// 将字母转换为数字
-//@param a 待转换的字母
-//@return 转换后的数字
-static uint32_t letterToNum(char a);
 
 // 比较两个字符串位置顺序
 //@param a 第一个字符串
@@ -33,58 +30,6 @@ static bool isBeginWith(const char* str1, const char* str2);
 // 去除文件扩展名
 //@param dir 待处理的字符串
 static void stripExt(char* dir);
-
-static uint32_t strToInt(const char* str){
-	uint32_t result=0; //8个字节长度
-	if (str==NULL)
-		return 0;
-	while(isspace(*str)){
-		++str;
-	}
-	if(*str=='-'){
-		str++;
-	}else if(*str=='+')
-		str++;
-	while(*str<='9' && *str>='0'){
-		result=result*10+*str-'0';
-		str++;
-	}
-	return result;
-}
-
-static uint32_t letterToNum(char a){
-    char array[27]=".abcdefghijklmnopqrstuvwxyz";
-    for(int b=0;b<=26;b++){
-        if(a == array[b]){
-            return b;
-        }
-    }
-    return 0;
-}
-
-static uint8_t compareStringOrder(char* a,char* b){
-    for(int i= 0;i<20;i++){
-        a[i] = tolower(a[i]);
-
-    }
-    for(int i=0;i<20;i++){
-        b[i] = tolower(b[i]);
-    }
-    for(int i= 0;i<20;i++){
-        uint8_t aNum = letterToNum(a[i]);
-        uint8_t bNum = letterToNum(b[i]);
-        if((aNum == 0) && (bNum == 0)){
-            return 0;//找到了
-        }
-        else if(aNum < bNum){
-            return 2;//在后面
-        }
-        else if(aNum > bNum){
-            return 1;//在前面
-        }
-    }
-    return 3;//
-}
 
 static bool isEndWith(const char * str1, const char * str2){
     if(str1 == NULL || str2 == NULL)
@@ -144,6 +89,50 @@ static void stripExt(char *dir){
     }
 }
 
+static uint32_t strToInt(const char* str){
+	uint32_t result=0; //8个字节长度
+	if (str==NULL)
+		return 0;
+	while(isspace(*str)){
+		++str;
+	}
+	if(*str=='-'){
+		str++;
+	}else if(*str=='+')
+		str++;
+	while(*str<='9' && *str>='0'){
+		result=result*10+*str-'0';
+		str++;
+	}
+	return result;
+}
+
+
+static uint8_t compareStringOrder(char* a,char* b){
+    // for(int i= 0;i<20;i++){
+    //     a[i] = tolower(a[i]);
+
+    // }
+    // for(int i=0;i<20;i++){
+    //     b[i] = tolower(b[i]);
+    // }
+    for(int i= 0;i<20;i++){
+        char aNum = a[i];
+        char bNum = b[i];
+        //ESP_LOGI(TAG,"compareing: %s,%s,%c,%c",a,b,aNum,bNum);
+        if((aNum == 0) && (bNum == 0)){
+            return 0;//找到了
+        }
+        else if(aNum < bNum){
+            return 2;//在后面
+        }
+        else if(aNum > bNum){
+            return 1;//在前面
+        }
+    }
+    return 3;//
+}
+
 uint32_t dictFind(char* target){
     lv_fs_file_t f;
 	lv_fs_res_t res;
@@ -153,7 +142,7 @@ uint32_t dictFind(char* target){
 		LV_LOG_USER("Open error! Error code: %d", res);
 		return 0;
 	}
-	char TargetWord[] = "...................";
+	char TargetWord[20] = {0};
     for(int i= 0;i<20;i++){
         TargetWord[i] = target[i];
     }
@@ -166,15 +155,15 @@ uint32_t dictFind(char* target){
     uint32_t seekLowerLimit = 0;//范围下限
 
     uint8_t foundFlag = 0;
-    char data[] = ".............................";
-    char word[] = ".............................";
+    char data[30] = {0};
+    char word[30] = {0};
     uint32_t seekWord = 16;
     for(uint8_t ia = 0;ia<30;ia++){
         for(uint8_t ib=0;ib<30;ib++){
-            data[ib] = '.';
+            data[ib] = '\0';
         }
         for(uint8_t ib=0;ib<30;ib++){
-            word[ib] = '.';
+            word[ib] = '\0';
         }
         lv_fs_seek(&f, seekCurrent, LV_FS_SEEK_SET);
         for(uint8_t i = 0;i<30;i++){
@@ -210,8 +199,9 @@ uint32_t dictFind(char* target){
                 break;
             }
         }
-        //LV_LOG_USER("Open: %d%s", seekWord,word);
+        //LV_LOG_USER("Current: %s,%s,%d",TargetWord,word,seekWord);
         uint8_t compareStrResult =  compareStringOrder(word,TargetWord);
+        //LV_LOG_USER("compareStrResult: %d", compareStrResult);
         if(compareStrResult == 0){
             foundFlag = 1;
             break;

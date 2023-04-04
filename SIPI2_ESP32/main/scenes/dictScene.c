@@ -7,14 +7,14 @@ static const char *TAG = "SIPI2_DICTSCENE";
 lv_obj_t * dictScene;
 lv_obj_t * label;
 lv_obj_t * dictInputArea;
-char inputShort[] = "....................";
+char inputShort[20] = {0};
 uint8_t inputShortCursor;
 
 
 void dictSceneInit(){
     ESP_LOGI(TAG, "dictSceneInit");
     scene = SIPI_SCENE_dictScene;
-    for(int i = 0;i<21;i++){inputShort[i] = '.';};
+    for(int i = 0;i<21;i++){inputShort[i] = '\0';};
     inputShortCursor = 0;
     dictScene = lv_obj_create(lv_scr_act()); 
     lv_obj_remove_style_all(dictScene);
@@ -67,7 +67,7 @@ void dictSceneInputEvent(char inputCharOrigin){
     if(inputCharOrigin == 0){ //删除键
         if(inputShortCursor > 0){
             inputShortCursor--;
-            inputShort[inputShortCursor] = '.';
+            inputShort[inputShortCursor] = '\0';
             lv_textarea_del_char(dictInputArea);
         }
         return;
