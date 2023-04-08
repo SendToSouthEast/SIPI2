@@ -28,12 +28,24 @@ void wordSceneInit(char* target){
 
     labelObj = lv_obj_create(wordScene);
     lv_obj_remove_style_all(labelObj);
-    lv_obj_set_size(labelObj, SIPI_SCREEN_WIDTH, SIPI_SCREEN_HEIGHT);
+    lv_obj_set_size(labelObj, SIPI_SCREEN_WIDTH, SIPI_SCREEN_HEIGHT - 12);
+
+
+    lv_group_t * wordSenseGroup = lv_group_create();
+#ifdef USEWINDOWS
+    lv_indev_set_group(lv_win32_keypad_device_object, wordSenseGroup);
+#endif // WINDOWS
+#ifdef USEESP32
+    lv_indev_set_group(indev_keypad, wordSenseGroup);
+#endif // USEESP32
+    lv_obj_add_state(labelObj, LV_STATE_FOCUSED);
+    lv_group_add_obj(wordSenseGroup,labelObj);
+
     meaningLabel = lv_label_create(labelObj);
     lv_obj_set_style_text_font(meaningLabel, &simhei, 0);
     lv_label_set_recolor(meaningLabel,1);
     lv_obj_set_width(meaningLabel, SIPI_SCREEN_WIDTH);
-    lv_label_set_text(meaningLabel, "Designed by SendToSouthEast\nBased on ESP_IDF & LVGL");
+    lv_label_set_text(meaningLabel, "Designed by SendToSouthEast\nBased on ESP_IDF & LVGL\nB\nB\nB\nB\nB\nB\nB");
     lv_label_set_long_mode(meaningLabel, LV_LABEL_LONG_WRAP);
     lv_obj_set_pos(meaningLabel,0,12);
 

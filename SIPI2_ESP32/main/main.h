@@ -22,6 +22,7 @@
 #include "init.h"
 #include "config.h"
 
+lv_indev_t * indev_keypad;
 
 const lv_font_t simhei;
 const lv_font_t arial;

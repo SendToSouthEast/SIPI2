@@ -13,7 +13,7 @@ bool keyNOFlag = 0;
 bool inputFlag = 0;
 char InputBuffer = 0;
 
-lv_indev_t * indev_keypad;
+
 
 // 初始化UI
 void UIInit()
