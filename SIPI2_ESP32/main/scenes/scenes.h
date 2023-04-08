@@ -1,6 +1,10 @@
 #ifndef __SIPI2_SCENE_H__
 #define __SIPI2_SCENE_H__
 
+
+
+lv_obj_t *hintBar; //操作提示框
+
 // HID界面初始化
 void HIDSceneInit();
 

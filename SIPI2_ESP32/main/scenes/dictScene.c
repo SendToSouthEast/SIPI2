@@ -16,39 +16,40 @@ void dictSceneInit(){
     scene = SIPI_SCENE_dictScene;
     for(int i = 0;i<21;i++){inputShort[i] = '\0';};
     inputShortCursor = 0;
-    dictScene = lv_obj_create(lv_scr_act()); 
+    dictScene = lv_obj_create(lv_scr_act());
     lv_obj_remove_style_all(dictScene);
-    lv_obj_set_size(dictScene, 160, 128);
-
+    lv_obj_set_size(dictScene, SIPI_SCREEN_WIDTH, SIPI_SCREEN_HEIGHT);
 
     lv_obj_t *dictSceneTitleLable = lv_label_create(dictScene);
     lv_obj_set_style_text_font(dictSceneTitleLable, &lv_font_montserrat_16, 0);
-    lv_obj_set_width(dictSceneTitleLable, 160);
-    lv_obj_set_style_text_color(dictSceneTitleLable, lv_color_hex(0x990000),LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_width(dictSceneTitleLable, SIPI_SCREEN_WIDTH);
+    lv_obj_set_style_text_color(dictSceneTitleLable, lv_color_hex(0x990000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_label_set_text(dictSceneTitleLable, "ECDICTionary");
-    lv_obj_set_pos(dictSceneTitleLable,0,0);
-
-
+    lv_obj_set_pos(dictSceneTitleLable, 0, 0);
 
     lv_obj_t *dictSceneDetailLable = lv_label_create(dictScene);
     lv_obj_set_style_text_font(dictSceneDetailLable, &simhei, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_label_set_recolor(dictSceneDetailLable,1);
-    lv_obj_set_width(dictSceneDetailLable, 160);
-
+    lv_label_set_recolor(dictSceneDetailLable, 1);
+    lv_obj_set_width(dictSceneDetailLable, SIPI_SCREEN_WIDTH);
     lv_label_set_text(dictSceneDetailLable, "Designed by SendToSouthEast\nBased on ESP_IDF & LVGL");
-    lv_obj_set_pos(dictSceneDetailLable,0, 20);
-    //lv_label_set_long_mode(dictSceneDetailLable, LV_LABEL_LONG_WRAP);
-
+    lv_obj_set_pos(dictSceneDetailLable, 0, 20);
 
     dictInputArea = lv_textarea_create(dictScene);
-    lv_obj_set_size(dictInputArea, 160,20);
-    lv_textarea_set_one_line(dictInputArea, true);//单行模式
-    lv_obj_set_pos(dictInputArea,0,90);
+    lv_obj_set_size(dictInputArea, SIPI_SCREEN_WIDTH, 20);
+    lv_textarea_set_one_line(dictInputArea, true);
+    lv_obj_set_pos(dictInputArea, 0, SIPI_SCREEN_HEIGHT - 44);
     lv_obj_set_style_text_font(dictInputArea, &lv_font_montserrat_16, 0);
-
     lv_textarea_add_text(dictInputArea, "");
     lv_obj_add_state(dictInputArea, LV_STATE_FOCUSED);
+
+    lv_obj_t *hintBar = lv_label_create(dictScene);
+    lv_obj_set_size(hintBar, SIPI_SCREEN_WIDTH, 12);
+    lv_obj_set_pos(hintBar, 0, SIPI_SCREEN_HEIGHT - 12);
+    lv_obj_set_style_bg_color(hintBar, lv_color_hex(0xC0C0C0), 0); // 设置深灰色背景
+    lv_obj_set_style_text_font(hintBar, &lv_font_montserrat_12, 0);
+    lv_label_set_text(hintBar, "LEFT: Search  RIGHT: Exit");
 }
+
 void dictSceneQuitEvent(){
     lv_obj_del(dictScene);
 }

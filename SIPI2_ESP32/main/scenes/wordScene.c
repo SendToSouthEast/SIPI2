@@ -15,30 +15,44 @@ void getWord(uint32_t seek);
 
 lv_obj_t * wordScene;
 lv_obj_t * meaningLabel;
+lv_obj_t * labelObj;
 lv_obj_t * wordLabel;
 
 void wordSceneInit(char* target){
+    SIPI_LOGI(TAG, "wordSceneInit");
     scene = SIPI_SCENE_wordScene;
 
     wordScene = lv_obj_create(lv_scr_act());
     lv_obj_remove_style_all(wordScene);
-    lv_obj_set_size(wordScene, 160, 128);
+    lv_obj_set_size(wordScene, SIPI_SCREEN_WIDTH, SIPI_SCREEN_HEIGHT);
 
-    meaningLabel = lv_label_create(wordScene);
+    labelObj = lv_obj_create(wordScene);
+    lv_obj_remove_style_all(labelObj);
+    lv_obj_set_size(labelObj, SIPI_SCREEN_WIDTH, SIPI_SCREEN_HEIGHT);
+    meaningLabel = lv_label_create(labelObj);
     lv_obj_set_style_text_font(meaningLabel, &simhei, 0);
     lv_label_set_recolor(meaningLabel,1);
-    lv_obj_set_width(meaningLabel, 160);
-    lv_label_set_text(meaningLabel, "Write a #ff0000 red# word ECDICT    Designed by SendToSouthEast\nBased on ESP_IDF & LVGL");
+    lv_obj_set_width(meaningLabel, SIPI_SCREEN_WIDTH);
+    lv_label_set_text(meaningLabel, "Designed by SendToSouthEast\nBased on ESP_IDF & LVGL");
     lv_label_set_long_mode(meaningLabel, LV_LABEL_LONG_WRAP);
     lv_obj_set_pos(meaningLabel,0,12);
 
-    wordLabel = lv_label_create(wordScene);
+    wordLabel = lv_label_create(labelObj);
     lv_obj_set_style_text_font(wordLabel, &arial, 0);
-    lv_obj_set_width(wordLabel, 160);
+    lv_obj_set_width(wordLabel, SIPI_SCREEN_WIDTH);
     lv_label_set_recolor(wordLabel,1);
     lv_label_set_text(wordLabel, NULL);
     lv_label_set_long_mode(wordLabel, LV_LABEL_LONG_WRAP);
     lv_obj_set_pos(wordLabel,0,0);
+
+    // 创建操作提示栏
+    lv_obj_t *hintBar = lv_label_create(wordScene);
+    lv_obj_set_size(hintBar, SIPI_SCREEN_WIDTH, 12);
+    lv_obj_set_pos(hintBar, 0, SIPI_SCREEN_HEIGHT - 12);
+    lv_obj_set_style_bg_color(hintBar, lv_color_hex(0xC0C0C0), 0); // 设置深灰色背景
+    lv_obj_set_style_bg_opa(hintBar, LV_OPA_50, NULL); // 设置半透明
+    lv_obj_set_style_text_font(hintBar, &lv_font_montserrat_12, 0);
+    lv_label_set_text(hintBar, "LEFT: Exit  RIGHT: Exit");
 
     SIPI_LOGI(TAG,"finding word: %s",target);
     uint32_t wordSeek = dictFind(target);
