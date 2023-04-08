@@ -37,7 +37,9 @@
         "englishdict.h": "c",
         "scenes.h": "c",
         "lv_timer.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "future": "c",
+        "system_error": "c"
     },
     "idf.adapterTargetName": "esp32",
     "idf.portWin": "COM3",

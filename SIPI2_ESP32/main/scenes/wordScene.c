@@ -62,7 +62,7 @@ void wordSceneInit(char* target){
     lv_obj_set_size(hintBar, SIPI_SCREEN_WIDTH, 12);
     lv_obj_set_pos(hintBar, 0, SIPI_SCREEN_HEIGHT - 12);
     lv_obj_set_style_bg_color(hintBar, lv_color_hex(0xC0C0C0), 0); // 设置深灰色背景
-    lv_obj_set_style_bg_opa(hintBar, LV_OPA_50, NULL); // 设置半透明
+    lv_obj_set_style_bg_opa(hintBar, LV_OPA_50, LV_PART_MAIN | LV_STATE_DEFAULT); // 设置半透明
     lv_obj_set_style_text_font(hintBar, &lv_font_montserrat_12, 0);
     lv_label_set_text(hintBar, "LEFT: Exit  RIGHT: Exit");
 

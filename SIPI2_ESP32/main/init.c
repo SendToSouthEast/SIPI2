@@ -177,14 +177,14 @@ void SIPI_LOGI(const char* tag, const char* format, ...) {
     va_list args;
     va_start(args, format);
 
+    char message[256];
+    vsnprintf(message, 256, format, args);
+    
 #ifdef USEESP32
-    SIPI_LOGI(tag, format, args);
+    ESP_LOGI(tag, "%s", message);
 #endif
 
 #ifdef USEWINDOWS
-    char message[256];
-    vsnprintf(message, 256, format, args);
-    //snprintf(message + strlen(message), 256 - strlen(message), ":%s", message);
     LV_LOG_USER("[%s]: %s", tag, message);
 #endif
 

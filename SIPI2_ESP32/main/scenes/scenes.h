@@ -3,8 +3,6 @@
 
 
 
-lv_obj_t *hintBar; //操作提示框
-
 // HID界面初始化
 void HIDSceneInit();
 
