@@ -29,7 +29,7 @@ void lv_tick_task(void *arg)
 
 // LVGL初始化和任务
 void guiTask(void *p){
-    ESP_LOGI(TAG, "Initializing LVGL");
+    SIPI_LOGI(TAG, "Initializing LVGL");
     lv_init();
     lvgl_driver_init();
     lv_color_t *buf1 = heap_caps_malloc(DISP_BUF_SIZE * sizeof(lv_color_t), MALLOC_CAP_DMA);
@@ -69,7 +69,7 @@ void guiTask(void *p){
 
     lv_fs_if_init();
 
-    ESP_LOGI(TAG, "Initialized LVGL");
+    SIPI_LOGI(TAG, "Initialized LVGL");
     UIInit();
     while (1)
     {
@@ -132,7 +132,7 @@ void keyBoardReadTask(void *p)
         if(uartCharBuf){
             bool addChar = SIPI_YES;
             char inputCharOrigin = uartCharBuf;
-            //ESP_LOGI(TAG, "%c",inputCharOrigin);
+            //SIPI_LOGI(TAG, "%c",inputCharOrigin);
 
             //0x01 NONE
             //0x02 NUM  -
@@ -153,7 +153,7 @@ void keyBoardReadTask(void *p)
             }
 
             if(addChar){
-                //ESP_LOGI(TAG, "addChar%c",inputCharOrigin);
+                //SIPI_LOGI(TAG, "addChar%c",inputCharOrigin);
                 InputBuffer = inputCharOrigin;
                 inputFlag = 1;
             }

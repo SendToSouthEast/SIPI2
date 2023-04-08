@@ -8,7 +8,7 @@ static const char *TAG = "SIPI2_HIDSCENE";
 lv_obj_t * HIDScene;
 
 void HIDSceneInit(){
-    ESP_LOGI(TAG, "HIDSceneInit");
+    SIPI_LOGI(TAG, "HIDSceneInit");
     scene = SIPI_SCENE_HIDScene;
     HIDScene = lv_obj_create(lv_scr_act()); //创建scr;
     lv_obj_remove_style_all(HIDScene);

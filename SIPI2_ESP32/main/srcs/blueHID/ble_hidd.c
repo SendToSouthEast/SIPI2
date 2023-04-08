@@ -109,18 +109,18 @@ static void hidd_event_callback(esp_hidd_cb_event_t event, esp_hidd_cb_param_t *
         case ESP_HIDD_EVENT_DEINIT_FINISH:
 	     break;
 		case ESP_HIDD_EVENT_BLE_CONNECT: {
-            ESP_LOGI(BLUE_HID_TAG, "ESP_HIDD_EVENT_BLE_CONNECT");
+            SIPI_LOGI(BLUE_HID_TAG, "ESP_HIDD_EVENT_BLE_CONNECT");
             hid_conn_id = param->connect.conn_id;
             break;
         }
         case ESP_HIDD_EVENT_BLE_DISCONNECT: {
             sec_conn = false;
-            ESP_LOGI(BLUE_HID_TAG, "ESP_HIDD_EVENT_BLE_DISCONNECT");
+            SIPI_LOGI(BLUE_HID_TAG, "ESP_HIDD_EVENT_BLE_DISCONNECT");
             esp_ble_gap_start_advertising(&hidd_adv_params);
             break;
         }
         case ESP_HIDD_EVENT_BLE_VENDOR_REPORT_WRITE_EVT: {
-            ESP_LOGI(BLUE_HID_TAG, "%s, ESP_HIDD_EVENT_BLE_VENDOR_REPORT_WRITE_EVT", __func__);
+            SIPI_LOGI(BLUE_HID_TAG, "%s, ESP_HIDD_EVENT_BLE_VENDOR_REPORT_WRITE_EVT", __func__);
             ESP_LOG_BUFFER_HEX(BLUE_HID_TAG, param->vendor_write.data, param->vendor_write.length);
         }
         default:
@@ -145,11 +145,11 @@ static void gap_event_handler(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param
         sec_conn = true;
         esp_bd_addr_t bd_addr;
         memcpy(bd_addr, param->ble_security.auth_cmpl.bd_addr, sizeof(esp_bd_addr_t));
-        ESP_LOGI(BLUE_HID_TAG, "remote BD_ADDR: %08x%04x",\
+        SIPI_LOGI(BLUE_HID_TAG, "remote BD_ADDR: %08x%04x",\
                 (bd_addr[0] << 24) + (bd_addr[1] << 16) + (bd_addr[2] << 8) + bd_addr[3],
                 (bd_addr[4] << 8) + bd_addr[5]);
-        ESP_LOGI(BLUE_HID_TAG, "address type = %d", param->ble_security.auth_cmpl.addr_type);
-        ESP_LOGI(BLUE_HID_TAG, "pair status = %s",param->ble_security.auth_cmpl.success ? "success" : "fail");
+        SIPI_LOGI(BLUE_HID_TAG, "address type = %d", param->ble_security.auth_cmpl.addr_type);
+        SIPI_LOGI(BLUE_HID_TAG, "pair status = %s",param->ble_security.auth_cmpl.success ? "success" : "fail");
         if(!param->ble_security.auth_cmpl.success) {
             ESP_LOGE(BLUE_HID_TAG, "fail reason = 0x%x",param->ble_security.auth_cmpl.fail_reason);
         }
@@ -268,7 +268,7 @@ uint8_t blueHIDKeyChange(char inputCharOrigin,bool * shiftFlag){
 void blueHIDClickKey(char inputCharOrigin){
     bool shiftFlag = 0;
     uint8_t key_vaule = blueHIDKeyChange(inputCharOrigin, &shiftFlag);
-    ESP_LOGI(BLUE_HID_TAG, "sended，%c,%d",inputCharOrigin,key_vaule);
+    SIPI_LOGI(BLUE_HID_TAG, "sended，%c,%d",inputCharOrigin,key_vaule);
      uint8_t key_vaule2 = {HID_KEY_RESERVED};
     if(shiftFlag){
         uint8_t key_vaule_shift = HID_KEY_LEFT_SHIFT;

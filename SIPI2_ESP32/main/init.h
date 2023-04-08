@@ -28,4 +28,7 @@ void key_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data);
 // @return 缓冲区数据（char），若无则为0
 char cheakUartKeyboard();
 
+// 日志信息输出函数
+void SIPI_LOGI(const char* tag, const char* format, ...);
+
 #endif //__INIT_H__

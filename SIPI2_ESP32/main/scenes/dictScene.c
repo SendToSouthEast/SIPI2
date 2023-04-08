@@ -12,7 +12,7 @@ uint8_t inputShortCursor;
 
 
 void dictSceneInit(){
-    ESP_LOGI(TAG, "dictSceneInit");
+    SIPI_LOGI(TAG, "dictSceneInit");
     scene = SIPI_SCENE_dictScene;
     for(int i = 0;i<21;i++){inputShort[i] = '\0';};
     inputShortCursor = 0;
@@ -72,7 +72,7 @@ void dictSceneInputEvent(char inputCharOrigin){
         }
         return;
     }
-    //ESP_LOGI(TAG, "inputShortCursor%d",inputShortCursor);
+    //SIPI_LOGI(TAG, "inputShortCursor%d",inputShortCursor);
     inputShort[inputShortCursor] = inputCharOrigin;
     inputShortCursor++;
     lv_textarea_add_char(dictInputArea, inputCharOrigin);

@@ -119,7 +119,7 @@ static uint8_t compareStringOrder(char* a,char* b){
     for(int i= 0;i<20;i++){
         char aNum = a[i];
         char bNum = b[i];
-        //ESP_LOGI(TAG,"compareing: %s,%s,%c,%c",a,b,aNum,bNum);
+        //SIPI_LOGI(TAG,"compareing: %s,%s,%c,%c",a,b,aNum,bNum);
         if((aNum == 0) && (bNum == 0)){
             return 0;//找到了
         }

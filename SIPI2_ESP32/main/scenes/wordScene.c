@@ -40,7 +40,7 @@ void wordSceneInit(char* target){
     lv_label_set_long_mode(wordLabel, LV_LABEL_LONG_WRAP);
     lv_obj_set_pos(wordLabel,0,0);
 
-    ESP_LOGI(TAG,"finding word: %s",target);
+    SIPI_LOGI(TAG,"finding word: %s",target);
     uint32_t wordSeek = dictFind(target);
     getWord(wordSeek);
 }

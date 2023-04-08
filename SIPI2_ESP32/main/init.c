@@ -40,7 +40,7 @@ static void uart_event_task(void *pvParameters)
                     break;
                 //Event of HW FIFO overflow detected
                 case UART_FIFO_OVF: //硬件fifo溢出
-                    ESP_LOGI(TAG, "hw fifo overflow");
+                    SIPI_LOGI(TAG, "hw fifo overflow");
                     // If fifo overflow happened, you should consider adding flow control for your application.
                     // The ISR has already reset the rx FIFO,
                     // As an example, we directly flush the rx buffer here in order to read more data.
@@ -49,7 +49,7 @@ static void uart_event_task(void *pvParameters)
                     break;
                 //Event of UART ring buffer full
                 case UART_BUFFER_FULL: //环形缓冲区满
-                    ESP_LOGI(TAG, "ring buffer full");
+                    SIPI_LOGI(TAG, "ring buffer full");
                     // If buffer full happened, you should consider encreasing your buffer size
                     // As an example, we directly flush the rx buffer here in order to read more data.
                     uart_flush_input(EX_UART_NUM);
@@ -57,22 +57,22 @@ static void uart_event_task(void *pvParameters)
                     break;
                 //Event of UART RX break detected
                 case UART_BREAK:
-                    ESP_LOGI(TAG, "uart rx break");
+                    SIPI_LOGI(TAG, "uart rx break");
                     break;
                 //Event of UART parity check error
                 case UART_PARITY_ERR:
-                    ESP_LOGI(TAG, "uart parity error");
+                    SIPI_LOGI(TAG, "uart parity error");
                     break;
                 //Event of UART frame error
                 case UART_FRAME_ERR:
-                    ESP_LOGI(TAG, "uart frame error");
+                    SIPI_LOGI(TAG, "uart frame error");
                     break;
                 //UART_PATTERN_DET
                 case UART_PATTERN_DET:
                     break;
                 //Others
                 default:
-                    ESP_LOGI(TAG, "uart event type: %d", event.type);
+                    SIPI_LOGI(TAG, "uart event type: %d", event.type);
                     break;
             }
         }
@@ -173,3 +173,20 @@ void key_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
     data->key = last_key;
 }
 
+void SIPI_LOGI(const char* tag, const char* format, ...) {
+    va_list args;
+    va_start(args, format);
+
+#ifdef USEESP32
+    SIPI_LOGI(tag, format, args);
+#endif
+
+#ifdef USEWINDOWS
+    char message[256];
+    vsnprintf(message, 256, format, args);
+    //snprintf(message + strlen(message), 256 - strlen(message), ":%s", message);
+    LV_LOG_USER("[%s]: %s", tag, message);
+#endif
+
+    va_end(args);
+}
