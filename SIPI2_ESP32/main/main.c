@@ -8,6 +8,8 @@ static const char *TAG = "SIPI2_MAIN";
 
 void keyCheakTask();
 
+uint8_t LVKeyYBuff = 0;
+
 bool keyYesFlag = 0;
 bool keyNOFlag = 0;
 bool inputFlag = 0;
@@ -131,6 +133,7 @@ void keyBoardReadTask(void *p)
         char uartCharBuf = cheakUartKeyboard();
         if(uartCharBuf){
             bool addChar = SIPI_YES;
+            bool LVKeys = SIPI_NO;
             char inputCharOrigin = uartCharBuf;
             //SIPI_LOGI(TAG, "%c",inputCharOrigin);
 
@@ -150,7 +153,15 @@ void keyBoardReadTask(void *p)
                 case 0x07:inputCharOrigin='\n';break;//enter
                 case 0x08:inputCharOrigin= 0x00;break;//delete
 
+
+
+                case 0x0A:addChar = SIPI_NO;LVKeys = SIPI_YES;LVKeyYBuff = LV_KEY_LEFT;break;
+                case 0x0B:addChar = SIPI_NO;LVKeys = SIPI_YES;LVKeyYBuff = LV_KEY_ENTER;break;
+                case 0x0C:addChar = SIPI_NO;LVKeys = SIPI_YES;LVKeyYBuff = LV_KEY_DOWN;break;
+                case 0x0D:addChar = SIPI_NO;LVKeys = SIPI_YES;LVKeyYBuff = LV_KEY_RIGHT;break;
+                case 0x0E:addChar = SIPI_NO;LVKeys = SIPI_YES;LVKeyYBuff = LV_KEY_UP;break;
             }
+
 
             if(addChar){
                 //SIPI_LOGI(TAG, "addChar%c",inputCharOrigin);
@@ -162,6 +173,19 @@ void keyBoardReadTask(void *p)
     }
 
 }
+
+uint8_t cheakLVKey(){
+    if(LVKeyYBuff){
+        uint8_t LVKeyYBuff_ = LVKeyYBuff;
+        LVKeyYBuff = 0;
+        return LVKeyYBuff_;
+    }
+    else{
+        return 0;
+    }
+}
+
+
 void app_main(void)
 {
     UART2_INIT();

@@ -142,24 +142,27 @@ void key_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
     static uint32_t last_key = 0;
  
     /*Get whether the a key is pressed and save the pressed key*/
-    uint32_t act_key = key_get_key();
+    //uint32_t act_key = key_get_key();
+    uint8_t act_key = cheakLVKey();
+
+
     if(act_key != 0) {
         data->state = LV_INDEV_STATE_PR;
         /*Translate the keys to LVGL control characters according to your key definitions*/
         switch(act_key) {
-            case SIPI_KEY_LEFT:
+            case LV_KEY_LEFT:
                 act_key = LV_KEY_PREV;
                 break;
-            case SIPI_KEY_RIGHT:
+            case LV_KEY_RIGHT:
                 act_key = LV_KEY_NEXT;
                 break;
-            case SIPI_KEY_UP:
+            case LV_KEY_UP:
                 act_key = LV_KEY_UP;//LV_KEY_HOME;
                 break;
-            case SIPI_KEY_DOWN:
+            case LV_KEY_DOWN:
                 act_key = LV_KEY_DOWN;//LV_KEY_ENTER;
                 break;
-            case SIPI_KEY_YES:
+            case LV_KEY_ENTER:
                 act_key = LV_KEY_ENTER;//LV_KEY_ENTER;
                 break;
         }

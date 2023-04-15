@@ -28,4 +28,6 @@ const lv_font_t simhei;
 const lv_font_t arial;
 uint8_t scene;
 
+uint8_t cheakLVKey();
+
 #endif // __MAIN_H__
