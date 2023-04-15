@@ -12,6 +12,7 @@ idf_component_register(
          "scenes/dictScene.c"
          "scenes/wordScene.c"
          "scenes/HIDScene.c"
+         "scenes/mainScene.c"
 
          "srcs/blueHID/ble_hidd.c"
          "srcs/blueHID/esp_hidd_prf_api.c"

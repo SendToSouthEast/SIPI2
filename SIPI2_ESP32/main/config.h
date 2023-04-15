@@ -21,7 +21,7 @@
 #define SIPI_INPUTMODE_UPLETTER 2
 #define SIPI_INPUTMODE_NUM_SYM 3
 
-#define SIPI_SCENE_MainScene 0
+#define SIPI_SCENE_mainScene 0
 #define SIPI_SCENE_1Scene 1
 #define SIPI_SCENE_2Scene 2
 #define SIPI_SCENE_3Scene 3

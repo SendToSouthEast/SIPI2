@@ -20,7 +20,7 @@ char InputBuffer = 0;
 // 初始化UI
 void UIInit()
 {
-    dictSceneInit();//初始化词典场景
+    mainSceneInit();
 }
 
 

@@ -31,15 +31,16 @@ void wordSceneInit(char* target){
     lv_obj_set_size(labelObj, SIPI_SCREEN_WIDTH, SIPI_SCREEN_HEIGHT - 12);
 
 
-    lv_group_t * wordSenseGroup = lv_group_create();
+    lv_group_t * wordsceneGroup = lv_group_create();
 #ifdef USEWINDOWS
-    lv_indev_set_group(lv_win32_keypad_device_object, wordSenseGroup);
+    lv_indev_set_group(lv_win32_keypad_device_object, wordsceneGroup);
 #endif // WINDOWS
 #ifdef USEESP32
-    lv_indev_set_group(indev_keypad, wordSenseGroup);
+    lv_indev_set_group(indev_keypad, wordsceneGroup);
 #endif // USEESP32
+    lv_group_add_obj(wordsceneGroup,labelObj);
     lv_obj_add_state(labelObj, LV_STATE_FOCUSED);
-    lv_group_add_obj(wordSenseGroup,labelObj);
+
 
     meaningLabel = lv_label_create(labelObj);
     lv_obj_set_style_text_font(meaningLabel, &simhei, 0);

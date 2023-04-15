@@ -3,6 +3,15 @@
 
 
 
+// main界面初始化
+void mainSceneInit();
+
+// main界面注销事件
+void mainSceneQuitEvent();
+
+
+
+
 // HID界面初始化
 void HIDSceneInit();
 

@@ -62,7 +62,7 @@ void dictSceneYESEvent(){
 
 void dictSceneNOEvent(){
     dictSceneQuitEvent();
-    HIDSceneInit();
+    mainSceneInit();
 }
 
 void dictSceneInputEvent(char inputCharOrigin){
