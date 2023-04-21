@@ -13,6 +13,7 @@ idf_component_register(
          "scenes/wordScene.c"
          "scenes/HIDScene.c"
          "scenes/mainScene.c"
+         "scenes/calcScene.c"
 
          "srcs/blueHID/ble_hidd.c"
          "srcs/blueHID/esp_hidd_prf_api.c"
@@ -20,6 +21,8 @@ idf_component_register(
          "srcs/blueHID/hid_device_le_prf.c"
 
          "srcs/englishDict/englishDict.c"
+
+         "srcs/calculate/calculate.c"
 
     INCLUDE_DIRS        # optional, add here public include directories
     PRIV_INCLUDE_DIRS
@@ -29,6 +32,7 @@ idf_component_register(
         "srcs"
         "srcs/blueHID"
         "srcs/englishDict"
+        "srcs/calculate"
         
         
     REQUIRES

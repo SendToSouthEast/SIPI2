@@ -91,7 +91,10 @@ void keyCheakTask(){
             break; 
         case SIPI_SCENE_wordScene:
             wordSceneYESEvent();
-            break;        
+            break;
+         case SIPI_SCENE_calcScene:
+            calcSceneYESEvent();
+            break;
         default:
                 break;
         }
@@ -104,7 +107,10 @@ void keyCheakTask(){
             break; 
         case SIPI_SCENE_wordScene:
             wordSceneNOEvent();
-            break;        
+            break;
+        case SIPI_SCENE_calcScene:
+            calcSceneNOEvent();
+            break;
         default:
                 break;
         }
@@ -117,6 +123,9 @@ void keyCheakTask(){
             break;    
         case SIPI_SCENE_HIDScene:
             HIDSceneInputEvent(InputBuffer);
+            break;  
+        case SIPI_SCENE_calcScene:
+            calcSceneInputEvent(InputBuffer);
             break;  
         default:
                 break;

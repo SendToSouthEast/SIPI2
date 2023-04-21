@@ -28,9 +28,10 @@
 
 #define SIPI_SCENE_dictScene 10
 #define SIPI_SCENE_wordScene 11
-#define SIPI_SCENE_AlbumScene 12
-#define SIPI_SCENE_ImgShowScene 13
+//#define SIPI_SCENE_AlbumScene 12
+//#define SIPI_SCENE_ImgShowScene 13
 #define SIPI_SCENE_HIDScene 14
+#define SIPI_SCENE_calcScene 0
 
 #define SIPI_OK 1
 #define SIPI_YES 1

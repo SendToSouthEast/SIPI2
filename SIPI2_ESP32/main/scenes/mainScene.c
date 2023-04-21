@@ -7,6 +7,7 @@ static const char *TAG = "SIPI2_MAINSCENE";
 lv_obj_t *mainScene;
 lv_obj_t *ecdictButton;
 lv_obj_t *bluetoothButton;
+lv_obj_t *calcSceneButton;
 
 void ecdictButtonClickEvent(lv_obj_t *obj, lv_event_t event){
     mainSceneQuitEvent();
@@ -16,6 +17,10 @@ void ecdictButtonClickEvent(lv_obj_t *obj, lv_event_t event){
 void bluetoothButtonClickEvent(lv_obj_t *obj, lv_event_t event){
     mainSceneQuitEvent();
     HIDSceneInit();
+}
+void calcSceneButtonClickEvent(lv_obj_t *obj, lv_event_t event){
+    mainSceneQuitEvent();
+    calcSceneInit();
 }
 
 void mainSceneInit(){
@@ -57,9 +62,19 @@ void mainSceneInit(){
     lv_obj_center(bluetoothLabel);
     lv_obj_add_event_cb(bluetoothButton, bluetoothButtonClickEvent ,LV_EVENT_CLICKED,NULL);
 
+
+    calcSceneButton = lv_btn_create(mainScene);
+    lv_obj_set_size(calcSceneButton, SIPI_SCREEN_WIDTH-10, 20);
+    lv_obj_set_pos(calcSceneButton, 5,80);
+    lv_obj_set_style_radius(calcSceneButton, 3, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(calcSceneButton, lv_palette_main(LV_PALETTE_ORANGE), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_t *calcSceneLabel = lv_label_create(calcSceneButton);
+    lv_label_set_text(calcSceneLabel, "calculate");
+    lv_obj_center(calcSceneLabel);
+    lv_obj_add_event_cb(calcSceneButton, calcSceneButtonClickEvent ,LV_EVENT_CLICKED,NULL);
+
+
     lv_group_t *group = lv_group_create();
-
-
 
 
     lv_group_t * mainSceneGroup = lv_group_create();
@@ -71,6 +86,7 @@ void mainSceneInit(){
 #endif // USEESP32
     lv_group_add_obj(mainSceneGroup, ecdictButton);
     lv_group_add_obj(mainSceneGroup, bluetoothButton);
+    lv_group_add_obj(mainSceneGroup, calcSceneButton);
     lv_obj_add_state(ecdictButton, LV_STATE_FOCUSED);
 }
 

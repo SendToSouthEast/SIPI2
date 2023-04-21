@@ -61,4 +61,20 @@ void wordSceneYESEvent();
 void wordSceneNOEvent();
 
 
+
+//计算器界面初始化
+void calcSceneInit();
+
+//计算器界面注销事件
+void calcSceneQuitEvent();
+
+//计算器界面YES事件
+void calcSceneYESEvent();
+
+//计算器界面NO事件
+void calcSceneNOEvent();
+
+//计算器界面输入事件
+//@param inputCharOrigin 输入原数据
+void calcSceneInputEvent(char inputCharOrigin);
 #endif // __SIPI2_SCENE_H__
