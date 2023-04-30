@@ -71,13 +71,14 @@ void oald10StrRead(uint32_t pos, lv_fs_file_t *olad10StrFile, char bufferText[])
 
         uint8_t buf[1];
         lv_fs_read(olad10StrFile, buf, 1, NULL);
-        if(buf[0] == '\n'){
+        if(buf[0] == '\n' || buf[0] == 13 ){
             bufferText[i] = '\0';
             break;
         }
         else{
             bufferText[i] = buf[0];
         }
+        //SIPI_LOGI(TAG, "buffer read %d,%s,",buf[0],buf[0]);
     }
 }
 
