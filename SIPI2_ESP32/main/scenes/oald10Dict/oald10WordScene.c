@@ -101,6 +101,7 @@ void oald10Display(uint32_t seek, uint8_t page){
         return;
 	}
 
+    cJSONobj;
 
     if(page == 1){
         char bufferText[500] = {0};
@@ -121,10 +122,10 @@ void oald10Display(uint32_t seek, uint8_t page){
         
         
         // 读取word字段的值
-        cJSON* cJSONobj = cJSON_GetObjectItem(root, "word");
+        cJSONobj = cJSON_GetObjectItem(root, "word");
         if (cJSONobj != NULL) {
             readSeek = cJSONobj->valueint;
-            if(readSeak != 0){
+            if(readSeek != 0){
                 oald10StrRead(readSeek, &olad10StrFile, bufferText);
                 SIPI_LOGI(TAG, "read word :%s",bufferText);
 
@@ -139,10 +140,10 @@ void oald10Display(uint32_t seek, uint8_t page){
 
 
         // 读取USp字段的值
-        cJSON* cJSONobj = cJSON_GetObjectItem(root, "USp");
+        cJSONobj = cJSON_GetObjectItem(root, "USp");
         if (cJSONobj != NULL) {
             readSeek = cJSONobj->valueint;
-            if(readSeak != 0){
+            if(readSeek != 0){
                 oald10StrRead(readSeek, &olad10StrFile, bufferText);
 
                 lv_obj_t *bufferLabel = lv_label_create(labelObj);
@@ -156,10 +157,10 @@ void oald10Display(uint32_t seek, uint8_t page){
 
         
         // 读取Pos字段的值
-        cJSON* cJSONobj = cJSON_GetObjectItem(root, "Pos");
+        cJSONobj = cJSON_GetObjectItem(root, "Pos");
         if (cJSONobj != NULL) {
             readSeek = cJSONobj->valueint;
-            if(readSeak != 0){
+            if(readSeek != 0){
                 oald10StrRead(readSeek, &olad10StrFile, bufferText);
 
                 lv_obj_t *bufferLabel = lv_label_create(labelObj);
@@ -171,10 +172,10 @@ void oald10Display(uint32_t seek, uint8_t page){
         }
         
         // 读取cMean字段的值
-        cJSON* cJSONobj = cJSON_GetObjectItem(root, "cMean");
+        cJSONobj = cJSON_GetObjectItem(root, "cMean");
         if (cJSONobj != NULL) {
             readSeek = cJSONobj->valueint;
-            if(readSeak != 0){
+            if(readSeek != 0){
                 oald10StrRead(readSeek, &olad10StrFile, bufferText);
 
                 lv_obj_t *bufferLabel = lv_label_create(labelObj);
@@ -186,7 +187,10 @@ void oald10Display(uint32_t seek, uint8_t page){
         }
 
 
-        
+
+    }
+    else if(page == 2){
+
     }
     
 }
