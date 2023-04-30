@@ -205,13 +205,19 @@ void oald10Display(uint32_t seek, uint8_t page){
                 // 获取数组senses中的子数组senses
                 cJSON *sub_senses = cJSON_GetObjectItem(sense, "senses");
                 int sub_senses_array_size = cJSON_GetArraySize(sub_senses);
+                
+                lv_obj_t *senseObj = lv_obj_create(labelObj);
+                lv_obj_remove_style_all(senseObj);
+                lv_obj_add_style(bufferLabel, &sipi2_oald10_senseline_style,LV_PART_MAIN | LV_STATE_DEFAULT);
+                lv_obj_set_width(bufferLabel, SIPI_SCREEN_WIDTH);
+
                 for (int j = 0; j < sub_senses_array_size; j++) {
                     // 获取数组senses中的子数组senses中的对象
                     cJSON *sub_sense = cJSON_GetArrayItem(sub_senses, j);
                     readSeek = cJSON_GetObjectItem(sub_sense, "def_en")->valueint;
                     if(readSeek != 0){
                         oald10StrRead(readSeek, &olad10StrFile, bufferText);
-                        lv_obj_t *bufferLabel = lv_label_create(labelObj);
+                        lv_obj_t *bufferLabel = lv_label_create(senseObj);
                         lv_obj_add_style(bufferLabel, &sipi2_oald10_def_style,LV_PART_MAIN | LV_STATE_DEFAULT);
                         lv_obj_add_style(bufferLabel, &sipi2_oald10_senseline_style,LV_PART_MAIN | LV_STATE_DEFAULT);
                         lv_label_set_long_mode(bufferLabel, LV_LABEL_LONG_WRAP);
@@ -223,7 +229,7 @@ void oald10Display(uint32_t seek, uint8_t page){
                     readSeek = cJSON_GetObjectItem(sub_sense, "def_ch")->valueint;
                     if(readSeek != 0){
                         oald10StrRead(readSeek, &olad10StrFile, bufferText);
-                        lv_obj_t *bufferLabel = lv_label_create(labelObj);
+                        lv_obj_t *bufferLabel = lv_label_create(senseObj);
                         lv_obj_add_style(bufferLabel, &sipi2_oald10_chn_style,LV_PART_MAIN | LV_STATE_DEFAULT);
                         lv_label_set_long_mode(bufferLabel, LV_LABEL_LONG_WRAP);
                         lv_obj_set_width(bufferLabel, SIPI_SCREEN_WIDTH);
@@ -240,7 +246,7 @@ void oald10Display(uint32_t seek, uint8_t page){
                         readSeek = cJSON_GetObjectItem(eg, "en")->valueint;
                         if(readSeek != 0){
                             oald10StrRead(readSeek, &olad10StrFile, bufferText);
-                            lv_obj_t *bufferLabel = lv_label_create(labelObj);
+                            lv_obj_t *bufferLabel = lv_label_create(senseObj);
                             lv_obj_add_style(bufferLabel, &sipi2_oald10_examples_style,LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_label_set_long_mode(bufferLabel, LV_LABEL_LONG_WRAP);
                             lv_obj_set_width(bufferLabel, SIPI_SCREEN_WIDTH);
@@ -251,7 +257,7 @@ void oald10Display(uint32_t seek, uint8_t page){
                         readSeek = cJSON_GetObjectItem(eg, "ch")->valueint;
                         if(readSeek != 0){
                             oald10StrRead(readSeek, &olad10StrFile, bufferText);
-                            lv_obj_t *bufferLabel = lv_label_create(labelObj);
+                            lv_obj_t *bufferLabel = lv_label_create(senseObj);
                             lv_obj_add_style(bufferLabel, &sipi2_oald10_examplechn_style,LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_label_set_long_mode(bufferLabel, LV_LABEL_LONG_WRAP);
                             lv_obj_set_width(bufferLabel, SIPI_SCREEN_WIDTH);

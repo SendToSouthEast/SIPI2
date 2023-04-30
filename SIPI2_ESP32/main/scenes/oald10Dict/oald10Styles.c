@@ -33,11 +33,11 @@ void oald10StylesInit(){
 
 
     lv_style_init(&sipi2_oald10_def_style);
-    lv_style_set_text_font(&sipi2_oald10_def_style, &lv_font_montserrat_12);
+    lv_style_set_text_font(&sipi2_oald10_def_style, &LV_FONT_MONTSERRAT_12);
     lv_style_set_text_color(&sipi2_oald10_def_style, lv_color_make(0, 52, 114));
 
     lv_style_init(&sipi2_oald10_senseline_style);
-    lv_style_set_border_side(&sipi2_oald10_senseline_style, LV_BORDER_SIDE_TOP);
+    lv_style_set_border_side(&sipi2_oald10_senseline_style, LV_BORDER_SIDE_FULL);
     lv_style_set_border_color(&sipi2_oald10_senseline_style, lv_color_make(0, 52, 114));
     lv_style_set_border_width(&sipi2_oald10_senseline_style, 1);
 
@@ -48,7 +48,7 @@ void oald10StylesInit(){
 
 
     lv_style_init(&sipi2_oald10_examples_style);
-    lv_style_set_text_font(&sipi2_oald10_examples_style, &lv_font_montserrat_12);
+    lv_style_set_text_font(&sipi2_oald10_examples_style, &lv_font_montserrat_10);
     lv_style_set_text_color(&sipi2_oald10_examples_style, lv_palette_main(LV_PALETTE_TEAL));
 
 
@@ -65,7 +65,7 @@ void oald10StylesInit(){
     lv_style_init(&sipi2_oald10_shcutline_style);
     lv_style_set_border_side(&sipi2_oald10_shcutline_style, LV_BORDER_SIDE_BOTTOM);
     lv_style_set_border_color(&sipi2_oald10_shcutline_style, lv_color_make(199, 110, 6));
-    lv_style_set_border_width(&sipi2_oald10_shcutline_style, 1);
+    lv_style_set_border_width(&sipi2_oald10_shcutline_style, 2);
 
 
     lv_style_init(&sipi2_oald10_idiomheading_style);
