@@ -8,6 +8,9 @@
 #define DICT_INDEX_PATH "S:/SIPI2/DICT/index.txt"
 #define DICT_PATH "S:/SIPI2/DICT/dic.txt"
 #define ALBUM_PATH "S:/SIPI2/ALBUM"
+#define OALD_DICT_INDEX_PATH "S:/SIPI2/DICT/oald10/oald10_index.txt"
+#define OALD_DICT_MAIN_PATH "S:/SIPI2/DICT/oald10/oald10_main.txt"
+#define OALD_DICT_STR_PATH "S:/SIPI2/DICT/oald10/oald10_str.txt"
 
 #define SIPI_SCREEN_HEIGHT 128
 #define SIPI_SCREEN_WIDTH 160

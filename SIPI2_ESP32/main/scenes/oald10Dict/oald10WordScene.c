@@ -2,7 +2,7 @@
 
 #include "main.h"
 #include "englishDict.h"
-
+#include "cJSON.h"
 
 #include "oald10Styles.c"
 
@@ -19,9 +19,6 @@ void oald10Display(uint32_t seek, uint8_t page);
 lv_obj_t * oald10WordScene;
 lv_obj_t * labelObj;
 
-void event(){
-    SIPI_LOGI(TAG, "click");
-}
 void oald10WordSceneInit(char* target){
     SIPI_LOGI(TAG, "oald10WordSceneInit");
     scene = SIPI_SCENE_oald10WordScene;
@@ -46,15 +43,14 @@ void oald10WordSceneInit(char* target){
     lv_group_add_obj(oald10WordSceneGroup,labelObj);
     lv_obj_add_state(labelObj, LV_STATE_FOCUSED);
     lv_obj_set_flex_flow(labelObj, LV_FLEX_FLOW_COLUMN);
-
     oald10StylesInit();
 
 
     //SIPI_LOGI(TAG,"finding word: %s",target);
     //uint32_t wordSeek = dictFind(target);
     //oald10Display(wordSeek, 1);
+    
     oald10Display(1, 1);
-    lv_obj_add_event_cb(labelObj, event, LV_EVENT_KEY, NULL);
 }
 
 void oald10WordSceneQuitEvent(){
@@ -69,14 +65,109 @@ void oald10WordSceneNOEvent(){
     oald10WordSceneQuitEvent();
     dictSceneInit();
 }
+void oald10StrRead(uint32_t pos, lv_fs_file_t *olad10StrFile, char bufferText[]){
+    lv_fs_seek(olad10StrFile, pos, LV_FS_SEEK_SET);
+    for(uint16_t i = 0;i<500;i++){
 
+        uint8_t buf[1];
+        lv_fs_read(olad10StrFile, buf, 1, NULL);
+        if(buf[0] == '\n'){
+            bufferText[i] = '\0';
+            break;
+        }
+        else{
+            bufferText[i] = buf[0];
+        }
+    }
+}
 
 void oald10Display(uint32_t seek, uint8_t page){
+    lv_fs_file_t olad10StrFile;
+    lv_fs_file_t olad10MainFile;
+	lv_fs_res_t res;
+	res = lv_fs_open(&olad10StrFile, OALD_DICT_STR_PATH, LV_FS_MODE_RD);
+	if(res != LV_FS_RES_OK) {
+		SIPI_LOGE(TAG, "LVFS open olad10StrFile error! Error code: %d", res);
+        return;
+	}
+
+    res = lv_fs_open(&olad10MainFile, OALD_DICT_MAIN_PATH, LV_FS_MODE_RD);
+	if(res != LV_FS_RES_OK) {
+		SIPI_LOGE(TAG, "LVFS open olad10MainFile error! Error code: %d", res);
+        return;
+	}
+
+
     if(page == 1){
         char bufferText[500] = {0};
+        uint32_t readSeek = 0;
+        uint32_t bufferTextSeek = 0;
+
+
+        char* json_string = "{\"word\": 775029, \"Pos\": 775039, \"cMean\": 775055, \"USp\": 775171, \"UKp\": 775192, \"USps\": 0, \"UKps\": 0, \"senses\": [{\"shcut_en\": 0, \"shcut_ch\": 0, \"senses\": [{\"def_en\": 775215, \"def_ch\": 775244, \"egs\": [{\"en\": 775267, \"ch\": 775287}]}, {\"def_en\": 775304, \"def_ch\": 775345, \"egs\": [{\"en\": 775356, \"ch\": 775370}]}], \"pos\": 775387}, {\"shcut_en\": 0, \"shcut_ch\": 0, \"senses\": [{\"def_en\": 775398, \"def_ch\": 775457, \"egs\": []}, {\"def_en\": 775510, \"def_ch\": 775579, \"egs\": [{\"en\": 775614, \"ch\": 775631}]}], \"pos\": 775657}], \"idioms\": [], \"pvs\": []}";
+    
+
+        // 解析JSON词典数据
+        cJSON* root = cJSON_Parse(json_string);
+        SIPI_LOGI(TAG, "cJSON_Parse");
+        if (root == NULL) {
+            SIPI_LOGE(TAG, "Error parsing JSON: %s\n", cJSON_GetErrorPtr());
+            return ;
+        }
         
+        
+        // 读取word字段的值
+        cJSON* cJSONobj = cJSON_GetObjectItem(root, "word");
+        if (cJSONobj != NULL) {
+            readSeek = cJSONobj->valueint;
+            oald10StrRead(readSeek, &olad10StrFile, bufferText);
+            SIPI_LOGI(TAG, "read word :%s",bufferText);
+
+            lv_obj_t *bufferLabel = lv_label_create(labelObj);
+            lv_obj_add_style(bufferLabel, &sipi2_oald10_headword_style,LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_label_set_long_mode(bufferLabel, LV_LABEL_LONG_WRAP);
+            lv_obj_set_width(bufferLabel, SIPI_SCREEN_WIDTH);
+            lv_label_set_text(bufferLabel, bufferText);
+            SIPI_LOGI(TAG,"carrentPosY %d",lv_obj_get_height(bufferLabel));
+        }
 
 
+        
+        // 读取Pos字段的值
+        cJSON* pos = cJSON_GetObjectItem(root, "Pos");
+        if (pos != NULL) {
+            SIPI_LOGI(TAG, "Pos: %d\n", pos->valueint);
+        }
+        
+        // 读取cMean字段的值
+        cJSON* cMean = cJSON_GetObjectItem(root, "cMean");
+        if (cMean != NULL) {
+            SIPI_LOGI(TAG,"cMean: %d\n", cMean->valueint);
+        }
+        
+        // 读取USp字段的值
+        cJSON* USp = cJSON_GetObjectItem(root, "USp");
+        if (USp != NULL) {
+            SIPI_LOGI(TAG,"USp: %d\n", USp->valueint);
+        }
+        
+        // 读取UKp字段的值
+        cJSON* UKp = cJSON_GetObjectItem(root, "UKp");
+        if (UKp != NULL) {
+            SIPI_LOGI(TAG,"UKp: %d\n", UKp->valueint);
+        }
+        
+        // 读取USps字段的值
+        cJSON* USps = cJSON_GetObjectItem(root, "USps");
+        if (USps != NULL) {
+            SIPI_LOGI(TAG,"USps: %d\n", USps->valueint);
+        }
+        
+        // 读取UKps字段的值
+        cJSON* UKps = cJSON_GetObjectItem(root, "UKps");
+        if (UKps != NULL) {
+            SIPI_LOGI(TAG,"UKps: %d\n", UKps->valueint);
+        }
 
 
         
@@ -98,7 +189,7 @@ void oald10Display(uint32_t seek, uint8_t page){
         //lv_obj_set_pos(oald10PhonLabel, 0, carrentPosY);
         lv_obj_set_width(oald10PhonLabel, SIPI_SCREEN_WIDTH);
         lv_label_set_text(oald10PhonLabel, " phon");
-        carrentPosY += lv_obj_get_height(oald10PhonLabel);
+        //carrentPosY += lv_obj_get_height(oald10PhonLabel);
 
     }
     

@@ -115,7 +115,6 @@ void getWord(uint32_t seek){
 		return;
 	}
 	lv_fs_seek(&f, seek, LV_FS_SEEK_SET);
-	
 	uint8_t row = 0;
 	for(uint16_t i = 0;i<1000;i++){
 
