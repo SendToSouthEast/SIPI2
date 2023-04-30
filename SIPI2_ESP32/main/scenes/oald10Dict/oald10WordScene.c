@@ -82,6 +82,9 @@ void oald10StrRead(uint32_t pos, lv_fs_file_t *olad10StrFile, char bufferText[])
     }
 }
 
+
+
+
 void oald10Display(uint32_t seek, uint8_t page){
     lv_fs_file_t olad10StrFile;
     lv_fs_file_t olad10MainFile;
@@ -121,77 +124,69 @@ void oald10Display(uint32_t seek, uint8_t page){
         cJSON* cJSONobj = cJSON_GetObjectItem(root, "word");
         if (cJSONobj != NULL) {
             readSeek = cJSONobj->valueint;
-            oald10StrRead(readSeek, &olad10StrFile, bufferText);
-            SIPI_LOGI(TAG, "read word :%s",bufferText);
+            if(readSeak != 0){
+                oald10StrRead(readSeek, &olad10StrFile, bufferText);
+                SIPI_LOGI(TAG, "read word :%s",bufferText);
 
-            lv_obj_t *bufferLabel = lv_label_create(labelObj);
-            lv_obj_add_style(bufferLabel, &sipi2_oald10_headword_style,LV_PART_MAIN | LV_STATE_DEFAULT);
-            lv_label_set_long_mode(bufferLabel, LV_LABEL_LONG_WRAP);
-            lv_obj_set_width(bufferLabel, SIPI_SCREEN_WIDTH);
-            lv_label_set_text(bufferLabel, bufferText);
-            SIPI_LOGI(TAG,"carrentPosY %d",lv_obj_get_height(bufferLabel));
+                lv_obj_t *bufferLabel = lv_label_create(labelObj);
+                lv_obj_add_style(bufferLabel, &sipi2_oald10_headword_style,LV_PART_MAIN | LV_STATE_DEFAULT);
+                lv_label_set_long_mode(bufferLabel, LV_LABEL_LONG_WRAP);
+                lv_obj_set_width(bufferLabel, SIPI_SCREEN_WIDTH);
+                lv_label_set_text(bufferLabel, bufferText);
+                SIPI_LOGI(TAG,"carrentPosY %d",lv_obj_get_height(bufferLabel));
+            }
         }
 
+
+        // 读取USp字段的值
+        cJSON* cJSONobj = cJSON_GetObjectItem(root, "USp");
+        if (cJSONobj != NULL) {
+            readSeek = cJSONobj->valueint;
+            if(readSeak != 0){
+                oald10StrRead(readSeek, &olad10StrFile, bufferText);
+
+                lv_obj_t *bufferLabel = lv_label_create(labelObj);
+                lv_obj_add_style(bufferLabel, &sipi2_oald10_phon_style,LV_PART_MAIN | LV_STATE_DEFAULT);
+                lv_label_set_long_mode(bufferLabel, LV_LABEL_LONG_WRAP);
+                lv_obj_set_width(bufferLabel, SIPI_SCREEN_WIDTH);
+                lv_label_set_text(bufferLabel, bufferText);
+            }
+
+        }
 
         
         // 读取Pos字段的值
-        cJSON* pos = cJSON_GetObjectItem(root, "Pos");
-        if (pos != NULL) {
-            SIPI_LOGI(TAG, "Pos: %d\n", pos->valueint);
+        cJSON* cJSONobj = cJSON_GetObjectItem(root, "Pos");
+        if (cJSONobj != NULL) {
+            readSeek = cJSONobj->valueint;
+            if(readSeak != 0){
+                oald10StrRead(readSeek, &olad10StrFile, bufferText);
+
+                lv_obj_t *bufferLabel = lv_label_create(labelObj);
+                lv_obj_add_style(bufferLabel, &sipi2_oald10_pos_style,LV_PART_MAIN | LV_STATE_DEFAULT);
+                lv_label_set_long_mode(bufferLabel, LV_LABEL_LONG_WRAP);
+                lv_obj_set_width(bufferLabel, SIPI_SCREEN_WIDTH);
+                lv_label_set_text(bufferLabel, bufferText);
+            }
         }
         
         // 读取cMean字段的值
-        cJSON* cMean = cJSON_GetObjectItem(root, "cMean");
-        if (cMean != NULL) {
-            SIPI_LOGI(TAG,"cMean: %d\n", cMean->valueint);
-        }
-        
-        // 读取USp字段的值
-        cJSON* USp = cJSON_GetObjectItem(root, "USp");
-        if (USp != NULL) {
-            SIPI_LOGI(TAG,"USp: %d\n", USp->valueint);
-        }
-        
-        // 读取UKp字段的值
-        cJSON* UKp = cJSON_GetObjectItem(root, "UKp");
-        if (UKp != NULL) {
-            SIPI_LOGI(TAG,"UKp: %d\n", UKp->valueint);
-        }
-        
-        // 读取USps字段的值
-        cJSON* USps = cJSON_GetObjectItem(root, "USps");
-        if (USps != NULL) {
-            SIPI_LOGI(TAG,"USps: %d\n", USps->valueint);
-        }
-        
-        // 读取UKps字段的值
-        cJSON* UKps = cJSON_GetObjectItem(root, "UKps");
-        if (UKps != NULL) {
-            SIPI_LOGI(TAG,"UKps: %d\n", UKps->valueint);
+        cJSON* cJSONobj = cJSON_GetObjectItem(root, "cMean");
+        if (cJSONobj != NULL) {
+            readSeek = cJSONobj->valueint;
+            if(readSeak != 0){
+                oald10StrRead(readSeek, &olad10StrFile, bufferText);
+
+                lv_obj_t *bufferLabel = lv_label_create(labelObj);
+                lv_obj_add_style(bufferLabel, &sipi2_oald10_chn_style,LV_PART_MAIN | LV_STATE_DEFAULT);
+                lv_label_set_long_mode(bufferLabel, LV_LABEL_LONG_WRAP);
+                lv_obj_set_width(bufferLabel, SIPI_SCREEN_WIDTH);
+                lv_label_set_text(bufferLabel, bufferText);
+            }
         }
 
 
         
-        //uint32_t carrentPosY = 0;
-        lv_obj_t *oald10HeadwordLabel = lv_label_create(labelObj);
-        lv_obj_add_style(oald10HeadwordLabel, &sipi2_oald10_headword_style,LV_PART_MAIN | LV_STATE_DEFAULT);
-        lv_label_set_long_mode(oald10HeadwordLabel, LV_LABEL_LONG_WRAP);
-        //lv_obj_set_pos(oald10HeadwordLabel, 0, carrentPosY);
-        lv_obj_set_width(oald10HeadwordLabel, SIPI_SCREEN_WIDTH);
-        lv_label_set_text(oald10HeadwordLabel, "This is a multi-line label.");
-        //carrentPosY += lv_obj_get_height(oald10HeadwordLabel);
-        SIPI_LOGI(TAG,"carrentPosY %d",lv_obj_get_height(oald10HeadwordLabel));
-
-
-
-        lv_obj_t *oald10PhonLabel = lv_label_create(labelObj);
-        lv_obj_add_style(oald10PhonLabel, &sipi2_oald10_phon_style,LV_PART_MAIN | LV_STATE_DEFAULT);
-        lv_label_set_long_mode(oald10PhonLabel, LV_LABEL_LONG_WRAP);
-        //lv_obj_set_pos(oald10PhonLabel, 0, carrentPosY);
-        lv_obj_set_width(oald10PhonLabel, SIPI_SCREEN_WIDTH);
-        lv_label_set_text(oald10PhonLabel, " phon");
-        //carrentPosY += lv_obj_get_height(oald10PhonLabel);
-
     }
     
 }
