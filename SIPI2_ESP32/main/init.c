@@ -193,3 +193,20 @@ void SIPI_LOGI(const char* tag, const char* format, ...) {
 
     va_end(args);
 }
+void SIPI_LOGE(const char* tag, const char* format, ...) {
+    va_list args;
+    va_start(args, format);
+
+    char message[256];
+    vsnprintf(message, 256, format, args);
+    
+#ifdef USEESP32
+    ESP_LOGE(tag, "%s", message);
+#endif
+
+#ifdef USEWINDOWS
+    LV_LOG_ERROR("[%s]: %s", tag, message);
+#endif
+
+    va_end(args);
+}

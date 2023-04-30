@@ -30,5 +30,6 @@ char cheakUartKeyboard();
 
 // 日志信息输出函数
 void SIPI_LOGI(const char* tag, const char* format, ...);
+void SIPI_LOGE(const char* tag, const char* format, ...);
 
 #endif //__INIT_H__
