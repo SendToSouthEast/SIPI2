@@ -133,11 +133,17 @@ static uint8_t compareStringOrder(char* a,char* b){
     return 3;//
 }
 
-uint32_t dictFind(char* target){
+uint32_t dictFind(char* target,int thisDictScene){
     lv_fs_file_t f;
 	lv_fs_res_t res;
 
-	res = lv_fs_open(&f, DICT_INDEX_PATH, LV_FS_MODE_RD);
+    if(thisDictScene == SIPI_SCENE_dictScene){
+        res = lv_fs_open(&f, DICT_INDEX_PATH, LV_FS_MODE_RD);
+    }
+    if(thisDictScene == SIPI_SCENE_oald10DictScene){
+        res = lv_fs_open(&f, OALD_DICT_INDEX_PATH, LV_FS_MODE_RD);
+    }
+	
 	if(res != LV_FS_RES_OK) {
 		LV_LOG_USER("Open error! Error code: %d", res);
 		return 0;

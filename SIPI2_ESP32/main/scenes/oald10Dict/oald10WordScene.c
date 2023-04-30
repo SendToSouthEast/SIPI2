@@ -49,8 +49,8 @@ void oald10WordSceneInit(char* target){
     //SIPI_LOGI(TAG,"finding word: %s",target);
     //uint32_t wordSeek = dictFind(target);
     //oald10Display(wordSeek, 1);
-    
-    oald10Display(1, 2);
+    uint32_t wordSeek = dictFind(target,scene);
+    oald10Display(wordSeek, 2);
 }
 
 void oald10WordSceneQuitEvent(){
@@ -67,7 +67,7 @@ void oald10WordSceneNOEvent(){
 }
 void oald10StrRead(uint32_t pos, lv_fs_file_t *olad10StrFile, char bufferText[]){
     lv_fs_seek(olad10StrFile, pos, LV_FS_SEEK_SET);
-    for(uint16_t i = 0;i<500;i++){
+    for(uint16_t i = 0;i<200;i++){
 
         uint8_t buf[1];
         lv_fs_read(olad10StrFile, buf, 1, NULL);
@@ -102,13 +102,24 @@ void oald10Display(uint32_t seek, uint8_t page){
 	}
 
     cJSON* cJSONobj;
-    char bufferText[500] = {0};
+    char bufferText[200] = {0};
     uint32_t readSeek = 0;
+    char bufferJsonText[2000] = {0};
 
-    char* json_string = "{\"word\": 775029, \"Pos\": 775039, \"cMean\": 775055, \"USp\": 775171, \"UKp\": 775192, \"USps\": 0, \"UKps\": 0, \"senses\": [{\"shcut_en\": 0, \"shcut_ch\": 0, \"senses\": [{\"def_en\": 775215, \"def_ch\": 775244, \"egs\": [{\"en\": 775267, \"ch\": 775287}]}, {\"def_en\": 775304, \"def_ch\": 775345, \"egs\": [{\"en\": 775356, \"ch\": 775370}]}], \"pos\": 775387}, {\"shcut_en\": 0, \"shcut_ch\": 0, \"senses\": [{\"def_en\": 775398, \"def_ch\": 775457, \"egs\": []}, {\"def_en\": 775510, \"def_ch\": 775579, \"egs\": [{\"en\": 775614, \"ch\": 775631}]}], \"pos\": 775657}], \"idioms\": [], \"pvs\": []}";
-    
+    lv_fs_seek(&olad10MainFile, seek, LV_FS_SEEK_SET);
+    for(uint16_t i = 0;i<2000;i++){
+        uint8_t buf[1];
+        lv_fs_read(&olad10MainFile, buf, 1, NULL);
+        if(buf[0] == '\n' || buf[0] == 13 ){
+            bufferJsonText[i] = '\0';
+            break;
+        }
+        else{
+            bufferJsonText[i] = buf[0];
+        }
+    }
     // 解析JSON词典数据
-    cJSON* root = cJSON_Parse(json_string);
+    cJSON* root = cJSON_Parse(bufferJsonText);
     if (root == NULL) {
         SIPI_LOGE(TAG, "Error parsing JSON: %s\n", cJSON_GetErrorPtr());
         return ;
