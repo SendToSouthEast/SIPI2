@@ -8,7 +8,8 @@
                 "${workspaceFolder}/components/lv_fs_if/**",
                 "${workspaceFolder}/components/**",
                 "${workspaceFolder}/components/lvgl/**",
-                "${workspaceFolder}/components/lvgl_esp32_drivers/**"
+                "${workspaceFolder}/components/lvgl_esp32_drivers/**",
+                "${workspaceFolder}/main"
             ],
             "defines": [
                 "_DEBUG",

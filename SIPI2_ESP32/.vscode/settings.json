@@ -39,10 +39,12 @@
         "lv_timer.h": "c",
         "stdio.h": "c",
         "future": "c",
-        "system_error": "c"
+        "system_error": "c",
+        "functional": "c"
     },
     "idf.adapterTargetName": "esp32",
     "idf.portWin": "COM3",
     "idf.flashType": "UART",
-    "cmake.configureOnOpen": true
+    "cmake.configureOnOpen": true,
+    "C_Cpp.errorSquiggles": "disabled"
 }

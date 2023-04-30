@@ -20,7 +20,8 @@ char InputBuffer = 0;
 // 初始化UI
 void UIInit()
 {
-    mainSceneInit();
+    oald10WordSceneInit(1);
+    //mainSceneInit();
 }
 
 

@@ -77,4 +77,22 @@ void calcSceneNOEvent();
 //计算器界面输入事件
 //@param inputCharOrigin 输入原数据
 void calcSceneInputEvent(char inputCharOrigin);
+
+
+
+
+
+
+
+
+
+void oald10WordSceneInit(char* target);
+void oald10WordSceneQuitEvent();
+void oald10WordSceneYESEvent();
+void oald10WordSceneNOEvent();
+
+
+
+
+
 #endif // __SIPI2_SCENE_H__

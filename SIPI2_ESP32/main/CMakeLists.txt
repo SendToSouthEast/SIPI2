@@ -14,6 +14,9 @@ idf_component_register(
          "scenes/HIDScene.c"
          "scenes/mainScene.c"
          "scenes/calcScene.c"
+         "scenes/oald10Dict/oald10DictScene.c"
+         "scenes/oald10Dict/oald10WordScene.c"
+         "scenes/oald10Dict/oald10Styles.c"
 
          "srcs/blueHID/ble_hidd.c"
          "srcs/blueHID/esp_hidd_prf_api.c"
@@ -28,6 +31,7 @@ idf_component_register(
     PRIV_INCLUDE_DIRS
         "."
         "scenes"
+        "scenes/oald10Dict"
         "fonts_imgs"
         "srcs"
         "srcs/blueHID"
