@@ -20,7 +20,7 @@ char InputBuffer = 0;
 // 初始化UI
 void UIInit()
 {
-    oald10WordSceneInit("affair");
+    oald10WordSceneInit("add to");
     //mainSceneInit();
 }
 
