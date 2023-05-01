@@ -42,14 +42,18 @@ void oald10WordSceneInit(char* target){
 #endif // USEESP32
     lv_group_add_obj(oald10WordSceneGroup,labelObj);
     lv_obj_add_state(labelObj, LV_STATE_FOCUSED);
+    
     lv_obj_set_flex_flow(labelObj, LV_FLEX_FLOW_COLUMN);
+    
+    
     oald10StylesInit();
 
 
     //SIPI_LOGI(TAG,"finding word: %s",target);
     //uint32_t wordSeek = dictFind(target);
     //oald10Display(wordSeek, 1);
-    uint32_t wordSeek = dictFind(target,scene);
+    uint32_t wordSeek = dictFind(target,SIPI_SCENE_oald10DictScene);
+    SIPI_LOGI(TAG, "wordSeek:%d",wordSeek);
     oald10Display(wordSeek, 2);
 }
 
@@ -118,6 +122,8 @@ void oald10Display(uint32_t seek, uint8_t page){
             bufferJsonText[i] = buf[0];
         }
     }
+    
+
     // 解析JSON词典数据
     cJSON* root = cJSON_Parse(bufferJsonText);
     if (root == NULL) {
@@ -216,11 +222,7 @@ void oald10Display(uint32_t seek, uint8_t page){
                 // 获取数组senses中的子数组senses
                 cJSON *sub_senses = cJSON_GetObjectItem(sense, "senses");
                 int sub_senses_array_size = cJSON_GetArraySize(sub_senses);
-                
-                lv_obj_t *senseObj = lv_obj_create(labelObj);
-                lv_obj_remove_style_all(senseObj);
-                lv_obj_add_style(bufferLabel, &sipi2_oald10_senseline_style,LV_PART_MAIN | LV_STATE_DEFAULT);
-                lv_obj_set_width(bufferLabel, SIPI_SCREEN_WIDTH);
+
 
                 for (int j = 0; j < sub_senses_array_size; j++) {
                     // 获取数组senses中的子数组senses中的对象
@@ -228,7 +230,7 @@ void oald10Display(uint32_t seek, uint8_t page){
                     readSeek = cJSON_GetObjectItem(sub_sense, "def_en")->valueint;
                     if(readSeek != 0){
                         oald10StrRead(readSeek, &olad10StrFile, bufferText);
-                        lv_obj_t *bufferLabel = lv_label_create(senseObj);
+                        lv_obj_t *bufferLabel = lv_label_create(labelObj);
                         lv_obj_add_style(bufferLabel, &sipi2_oald10_def_style,LV_PART_MAIN | LV_STATE_DEFAULT);
                         lv_obj_add_style(bufferLabel, &sipi2_oald10_senseline_style,LV_PART_MAIN | LV_STATE_DEFAULT);
                         lv_label_set_long_mode(bufferLabel, LV_LABEL_LONG_WRAP);
@@ -240,7 +242,7 @@ void oald10Display(uint32_t seek, uint8_t page){
                     readSeek = cJSON_GetObjectItem(sub_sense, "def_ch")->valueint;
                     if(readSeek != 0){
                         oald10StrRead(readSeek, &olad10StrFile, bufferText);
-                        lv_obj_t *bufferLabel = lv_label_create(senseObj);
+                        lv_obj_t *bufferLabel = lv_label_create(labelObj);
                         lv_obj_add_style(bufferLabel, &sipi2_oald10_chn_style,LV_PART_MAIN | LV_STATE_DEFAULT);
                         lv_label_set_long_mode(bufferLabel, LV_LABEL_LONG_WRAP);
                         lv_obj_set_width(bufferLabel, SIPI_SCREEN_WIDTH);
@@ -257,7 +259,7 @@ void oald10Display(uint32_t seek, uint8_t page){
                         readSeek = cJSON_GetObjectItem(eg, "en")->valueint;
                         if(readSeek != 0){
                             oald10StrRead(readSeek, &olad10StrFile, bufferText);
-                            lv_obj_t *bufferLabel = lv_label_create(senseObj);
+                            lv_obj_t *bufferLabel = lv_label_create(labelObj);
                             lv_obj_add_style(bufferLabel, &sipi2_oald10_examples_style,LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_label_set_long_mode(bufferLabel, LV_LABEL_LONG_WRAP);
                             lv_obj_set_width(bufferLabel, SIPI_SCREEN_WIDTH);
@@ -268,7 +270,94 @@ void oald10Display(uint32_t seek, uint8_t page){
                         readSeek = cJSON_GetObjectItem(eg, "ch")->valueint;
                         if(readSeek != 0){
                             oald10StrRead(readSeek, &olad10StrFile, bufferText);
-                            lv_obj_t *bufferLabel = lv_label_create(senseObj);
+                            lv_obj_t *bufferLabel = lv_label_create(labelObj);
+                            lv_obj_add_style(bufferLabel, &sipi2_oald10_examplechn_style,LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_label_set_long_mode(bufferLabel, LV_LABEL_LONG_WRAP);
+                            lv_obj_set_width(bufferLabel, SIPI_SCREEN_WIDTH);
+                            lv_label_set_text(bufferLabel, bufferText);
+                        }
+                    }
+                }
+            }
+        }
+
+        cJSON *idioms = cJSON_GetObjectItem(root, "idioms");
+        if (idioms != NULL && idioms->child != NULL) {
+            int idioms_array_size = cJSON_GetArraySize(idioms);
+            for (int i = 0; i < idioms_array_size; i++) {
+
+                lv_obj_t *bufferLabel1 = lv_label_create(labelObj);
+                lv_obj_add_style(bufferLabel1, &sipi2_oald10_idiomheading_style,LV_PART_MAIN | LV_STATE_DEFAULT);
+                lv_label_set_long_mode(bufferLabel1, LV_LABEL_LONG_WRAP);
+                lv_obj_set_width(bufferLabel1, SIPI_SCREEN_WIDTH);
+                lv_label_set_text(bufferLabel1, "\nIdioms");
+
+                // 获取数组senses中的对象
+                cJSON *sense = cJSON_GetArrayItem(senses, i);
+                readSeek = cJSON_GetObjectItem(sense, "idm")->valueint;
+                if(readSeek != 0){
+                    oald10StrRead(readSeek, &olad10StrFile, bufferText);
+                    lv_obj_t *bufferLabel = lv_label_create(labelObj);
+                    lv_obj_add_style(bufferLabel, &sipi2_oald10_idm_style,LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_obj_add_style(bufferLabel, &sipi2_oald10_shcutline_style,LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_label_set_long_mode(bufferLabel, LV_LABEL_LONG_WRAP);
+                    lv_obj_set_width(bufferLabel, SIPI_SCREEN_WIDTH);
+                    lv_label_set_text(bufferLabel, bufferText);
+                }
+
+
+                // 获取数组senses中的子数组senses
+                cJSON *sub_senses = cJSON_GetObjectItem(sense, "senses");
+                int sub_senses_array_size = cJSON_GetArraySize(sub_senses);
+
+
+                for (int j = 0; j < sub_senses_array_size; j++) {
+                    // 获取数组senses中的子数组senses中的对象
+                    cJSON *sub_sense = cJSON_GetArrayItem(sub_senses, j);
+                    readSeek = cJSON_GetObjectItem(sub_sense, "def_en")->valueint;
+                    if(readSeek != 0){
+                        oald10StrRead(readSeek, &olad10StrFile, bufferText);
+                        lv_obj_t *bufferLabel = lv_label_create(labelObj);
+                        lv_obj_add_style(bufferLabel, &sipi2_oald10_def_style,LV_PART_MAIN | LV_STATE_DEFAULT);
+                        lv_obj_add_style(bufferLabel, &sipi2_oald10_senseline_style,LV_PART_MAIN | LV_STATE_DEFAULT);
+                        lv_label_set_long_mode(bufferLabel, LV_LABEL_LONG_WRAP);
+                        lv_obj_set_width(bufferLabel, SIPI_SCREEN_WIDTH);
+                        lv_label_set_text(bufferLabel, bufferText);
+                    }
+
+
+                    readSeek = cJSON_GetObjectItem(sub_sense, "def_ch")->valueint;
+                    if(readSeek != 0){
+                        oald10StrRead(readSeek, &olad10StrFile, bufferText);
+                        lv_obj_t *bufferLabel = lv_label_create(labelObj);
+                        lv_obj_add_style(bufferLabel, &sipi2_oald10_chn_style,LV_PART_MAIN | LV_STATE_DEFAULT);
+                        lv_label_set_long_mode(bufferLabel, LV_LABEL_LONG_WRAP);
+                        lv_obj_set_width(bufferLabel, SIPI_SCREEN_WIDTH);
+                        lv_label_set_text(bufferLabel, bufferText);
+                    }
+
+
+                    // 获取数组senses中的子数组senses中的对象中的数组egs
+                    cJSON *egs = cJSON_GetObjectItem(sub_sense, "egs");
+                    int egs_array_size = cJSON_GetArraySize(egs);
+                    for (int k = 0; k < egs_array_size; k++) {
+                        // 获取数组senses中的子数组senses中的对象中的数组egs中的对象
+                        cJSON *eg = cJSON_GetArrayItem(egs, k);
+                        readSeek = cJSON_GetObjectItem(eg, "en")->valueint;
+                        if(readSeek != 0){
+                            oald10StrRead(readSeek, &olad10StrFile, bufferText);
+                            lv_obj_t *bufferLabel = lv_label_create(labelObj);
+                            lv_obj_add_style(bufferLabel, &sipi2_oald10_examples_style,LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_label_set_long_mode(bufferLabel, LV_LABEL_LONG_WRAP);
+                            lv_obj_set_width(bufferLabel, SIPI_SCREEN_WIDTH);
+                            lv_label_set_text(bufferLabel, bufferText);
+                        }
+
+
+                        readSeek = cJSON_GetObjectItem(eg, "ch")->valueint;
+                        if(readSeek != 0){
+                            oald10StrRead(readSeek, &olad10StrFile, bufferText);
+                            lv_obj_t *bufferLabel = lv_label_create(labelObj);
                             lv_obj_add_style(bufferLabel, &sipi2_oald10_examplechn_style,LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_label_set_long_mode(bufferLabel, LV_LABEL_LONG_WRAP);
                             lv_obj_set_width(bufferLabel, SIPI_SCREEN_WIDTH);
