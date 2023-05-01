@@ -68,7 +68,7 @@ void wordSceneInit(char* target){
     lv_label_set_text(hintBar, "LEFT: Exit  RIGHT: Exit");
 
     SIPI_LOGI(TAG,"finding word: %s",target);
-    uint32_t wordSeek = dictFind(target);
+    uint32_t wordSeek = dictFind(target,scene);
     getWord(wordSeek);
 }
 

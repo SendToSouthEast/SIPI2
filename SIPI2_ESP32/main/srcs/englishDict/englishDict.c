@@ -133,15 +133,19 @@ static uint8_t compareStringOrder(char* a,char* b){
     return 3;//
 }
 
-uint32_t dictFind(char* target,int thisDictScene){
+uint32_t dictFind(char* target, uint8_t thisDictScene){
     lv_fs_file_t f;
 	lv_fs_res_t res;
 
     if(thisDictScene == SIPI_SCENE_dictScene){
         res = lv_fs_open(&f, DICT_INDEX_PATH, LV_FS_MODE_RD);
     }
-    if(thisDictScene == SIPI_SCENE_oald10DictScene){
+    else if(thisDictScene == SIPI_SCENE_oald10DictScene){
         res = lv_fs_open(&f, OALD_DICT_INDEX_PATH, LV_FS_MODE_RD);
+    }
+    else{
+        SIPI_LOGI(TAG, "wrong Scene %d,",thisDictScene);
+        return 0;
     }
 	
 	if(res != LV_FS_RES_OK) {
@@ -153,8 +157,8 @@ uint32_t dictFind(char* target,int thisDictScene){
         TargetWord[i] = target[i];
     }
 
-	char seekall[15];
-	lv_fs_read(&f, seekall, 15, NULL);
+	char seekall[13];
+	lv_fs_read(&f, seekall, 13, NULL);
     uint32_t seekallint = strToInt(seekall);
     uint32_t seekCurrent = seekallint/2 + 1;//当前
     uint32_t seekUpperLimit = seekallint;//范围上限
