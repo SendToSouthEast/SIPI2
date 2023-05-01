@@ -13,6 +13,9 @@ lv_style_t sipi2_oald10_shcut_style;
 lv_style_t sipi2_oald10_shcutline_style;
 lv_style_t sipi2_oald10_idiomheading_style;
 lv_style_t sipi2_oald10_idm_style;
+lv_style_t sipi2_oald10_idmline_style;
+lv_style_t sipi2_oald10_grammar_style;
+lv_style_t sipi2_oald10_use_style;
 
 void oald10StylesInit(){
     lv_style_init(&sipi2_oald10_headword_style);
@@ -75,4 +78,19 @@ void oald10StylesInit(){
     lv_style_init(&sipi2_oald10_idm_style);
     lv_style_set_text_font(&sipi2_oald10_idm_style, &lv_font_montserrat_12);
     lv_style_set_text_color(&sipi2_oald10_idm_style, lv_color_make(0, 0, 139));
+
+    lv_style_init(&sipi2_oald10_idmline_style);
+    lv_style_set_border_side(&sipi2_oald10_idmline_style, LV_BORDER_SIDE_RIGHT);
+    lv_style_set_border_color(&sipi2_oald10_idmline_style, lv_color_make(39, 161, 176));
+    lv_style_set_border_width(&sipi2_oald10_idmline_style, 4);
+    lv_style_set_pad_all(&sipi2_oald10_idmline_style, -4);
+
+    lv_style_init(&sipi2_oald10_use_style);
+    lv_style_set_text_font(&sipi2_oald10_use_style, &simhei);
+    lv_style_set_text_color(&sipi2_oald10_use_style, lv_palette_main(LV_PALETTE_BLUE));
+
+    lv_style_init(&sipi2_oald10_grammar_style);
+    lv_style_set_text_font(&sipi2_oald10_grammar_style, &lv_font_montserrat_10);
+    lv_style_set_text_color(&sipi2_oald10_grammar_style, lv_palette_main(LV_PALETTE_GREEN));
+
 }
