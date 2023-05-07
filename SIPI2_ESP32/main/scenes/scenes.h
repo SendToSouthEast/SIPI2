@@ -81,7 +81,11 @@ void calcSceneInputEvent(char inputCharOrigin);
 
 
 
-
+void oald10DictSceneInit();
+void oald10DictSceneQuitEvent();
+void oald10DictSceneYESEvent();
+void oald10DictSceneNOEvent();
+void oald10DictSceneInputEvent(char inputCharOrigin);
 
 
 

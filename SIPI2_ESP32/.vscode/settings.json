@@ -40,7 +40,10 @@
         "stdio.h": "c",
         "future": "c",
         "system_error": "c",
-        "functional": "c"
+        "functional": "c",
+        "regex": "c",
+        "sstream": "c",
+        "strstream": "c"
     },
     "idf.adapterTargetName": "esp32",
     "idf.portWin": "COM3",

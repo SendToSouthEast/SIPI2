@@ -20,8 +20,9 @@ char InputBuffer = 0;
 // 初始化UI
 void UIInit()
 {
-    oald10WordSceneInit("add to");
-    //mainSceneInit();
+    //oald10WordSceneInit("add to");
+    //oald10DictSceneInit();
+    mainSceneInit();
 }
 
 
@@ -93,8 +94,14 @@ void keyCheakTask(){
         case SIPI_SCENE_wordScene:
             wordSceneYESEvent();
             break;
-         case SIPI_SCENE_calcScene:
+        case SIPI_SCENE_calcScene:
             calcSceneYESEvent();
+            break;
+        case SIPI_SCENE_oald10DictScene:
+            oald10DictSceneYESEvent();
+            break;
+        case SIPI_SCENE_oald10WordScene:
+            oald10WordSceneYESEvent();
             break;
         default:
                 break;
@@ -112,6 +119,12 @@ void keyCheakTask(){
         case SIPI_SCENE_calcScene:
             calcSceneNOEvent();
             break;
+        case SIPI_SCENE_oald10DictScene:
+            oald10DictSceneNOEvent();
+            break;
+        case SIPI_SCENE_oald10WordScene:
+            oald10WordSceneNOEvent();
+            break;
         default:
                 break;
         }
@@ -128,6 +141,9 @@ void keyCheakTask(){
         case SIPI_SCENE_calcScene:
             calcSceneInputEvent(InputBuffer);
             break;  
+        case SIPI_SCENE_oald10DictScene:
+            oald10DictSceneInputEvent(InputBuffer);
+            break; 
         default:
                 break;
         }

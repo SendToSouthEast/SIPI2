@@ -6,12 +6,17 @@ static const char *TAG = "SIPI2_MAINSCENE";
 
 lv_obj_t *mainScene;
 lv_obj_t *ecdictButton;
+lv_obj_t *oald10DictButton;
 lv_obj_t *bluetoothButton;
 lv_obj_t *calcSceneButton;
 
 void ecdictButtonClickEvent(lv_obj_t *obj, lv_event_t event){
     mainSceneQuitEvent();
     dictSceneInit();
+}
+void oald10DictButtonClickEvent(lv_obj_t *obj, lv_event_t event){
+    mainSceneQuitEvent();
+    oald10DictSceneInit();
 }
 
 void bluetoothButtonClickEvent(lv_obj_t *obj, lv_event_t event){
@@ -30,19 +35,19 @@ void mainSceneInit(){
     mainScene = lv_obj_create(lv_scr_act());
     lv_obj_remove_style_all(mainScene);
     lv_obj_set_size(mainScene, SIPI_SCREEN_WIDTH, SIPI_SCREEN_HEIGHT);
+    lv_obj_set_flex_flow(mainScene, LV_FLEX_FLOW_COLUMN);
 
     lv_obj_t *titleLable = lv_label_create(mainScene);
     lv_obj_set_style_text_font(titleLable, &lv_font_montserrat_16, 0);
     lv_obj_set_width(titleLable, SIPI_SCREEN_WIDTH);
     lv_obj_set_style_text_color(titleLable, lv_color_hex(0x990000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_label_set_text(titleLable, "SIPI2");
-    lv_obj_align(titleLable, LV_ALIGN_TOP_LEFT, 0, 0);
 
 
 
     ecdictButton = lv_btn_create(mainScene);
     lv_obj_set_size(ecdictButton, SIPI_SCREEN_WIDTH-10, 20);
-    lv_obj_set_pos(ecdictButton, 5,30);
+    lv_obj_set_x(ecdictButton, 5);
     lv_obj_set_style_radius(ecdictButton, 3, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_color(ecdictButton, lv_palette_main(LV_PALETTE_ORANGE), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_t *ecdictLabel = lv_label_create(ecdictButton);
@@ -51,10 +56,21 @@ void mainSceneInit(){
     lv_obj_add_event_cb(ecdictButton, ecdictButtonClickEvent ,LV_EVENT_CLICKED,NULL);
 
 
+    oald10DictButton = lv_btn_create(mainScene);
+    lv_obj_set_size(oald10DictButton, SIPI_SCREEN_WIDTH-10, 20);
+    lv_obj_set_x(oald10DictButton, 5);
+    lv_obj_set_style_radius(oald10DictButton, 3, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(oald10DictButton, lv_palette_main(LV_PALETTE_ORANGE), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_t *oald10DictLabel = lv_label_create(oald10DictButton);
+    lv_label_set_text(oald10DictLabel, "Oxford Dict 10th");
+    lv_obj_center(oald10DictLabel);
+    lv_obj_add_event_cb(oald10DictButton, oald10DictButtonClickEvent ,LV_EVENT_CLICKED,NULL);
+
+
 
     bluetoothButton = lv_btn_create(mainScene);
     lv_obj_set_size(bluetoothButton, SIPI_SCREEN_WIDTH-10, 20);
-    lv_obj_set_pos(bluetoothButton, 5,55);
+    lv_obj_set_x(bluetoothButton, 5);
     lv_obj_set_style_radius(bluetoothButton, 3, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_color(bluetoothButton, lv_palette_main(LV_PALETTE_ORANGE), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_t *bluetoothLabel = lv_label_create(bluetoothButton);
@@ -65,7 +81,7 @@ void mainSceneInit(){
 
     calcSceneButton = lv_btn_create(mainScene);
     lv_obj_set_size(calcSceneButton, SIPI_SCREEN_WIDTH-10, 20);
-    lv_obj_set_pos(calcSceneButton, 5,80);
+    lv_obj_set_x(calcSceneButton, 5);
     lv_obj_set_style_radius(calcSceneButton, 3, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_color(calcSceneButton, lv_palette_main(LV_PALETTE_ORANGE), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_t *calcSceneLabel = lv_label_create(calcSceneButton);
@@ -85,6 +101,7 @@ void mainSceneInit(){
     lv_indev_set_group(indev_keypad, mainSceneGroup);
 #endif // USEESP32
     lv_group_add_obj(mainSceneGroup, ecdictButton);
+    lv_group_add_obj(mainSceneGroup, oald10DictButton);
     lv_group_add_obj(mainSceneGroup, bluetoothButton);
     lv_group_add_obj(mainSceneGroup, calcSceneButton);
     lv_obj_add_state(ecdictButton, LV_STATE_FOCUSED);

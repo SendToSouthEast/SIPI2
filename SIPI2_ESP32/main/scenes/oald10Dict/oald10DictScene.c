@@ -8,15 +8,15 @@ static const char *TAG = "SIPI2_oald10DictScene";
 lv_obj_t * oald10DictScene;
 lv_obj_t * label;
 lv_obj_t * dictInputArea;
-char inputShort[20] = {0};
-uint8_t inputShortCursor;
+char oald10DictInputShort[20] = {0};
+uint8_t oald10DictInputShortCursor;
 
 
 void oald10DictSceneInit(){
     SIPI_LOGI(TAG, "oald10DictSceneInit");
     scene = SIPI_SCENE_oald10DictScene;
-    for(int i = 0;i<21;i++){inputShort[i] = '\0';};
-    inputShortCursor = 0;
+    for(int i = 0;i<21;i++){oald10DictInputShort[i] = '\0';};
+    oald10DictInputShortCursor = 0;
     oald10DictScene = lv_obj_create(lv_scr_act());
     lv_obj_remove_style_all(oald10DictScene);
     lv_obj_set_size(oald10DictScene, SIPI_SCREEN_WIDTH, SIPI_SCREEN_HEIGHT);
@@ -25,14 +25,15 @@ void oald10DictSceneInit(){
     lv_obj_set_style_text_font(oald10DictSceneTitleLable, &lv_font_montserrat_16, 0);
     lv_obj_set_width(oald10DictSceneTitleLable, SIPI_SCREEN_WIDTH);
     lv_obj_set_style_text_color(oald10DictSceneTitleLable, lv_color_hex(0x990000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_label_set_text(oald10DictSceneTitleLable, "ECDICTionary");
+    lv_label_set_text(oald10DictSceneTitleLable, "Oxford");
     lv_obj_set_pos(oald10DictSceneTitleLable, 0, 0);
 
     lv_obj_t *oald10DictSceneDetailLable = lv_label_create(oald10DictScene);
-    lv_obj_set_style_text_font(oald10DictSceneDetailLable, &simhei, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_label_set_recolor(oald10DictSceneDetailLable, 1);
+    lv_obj_set_style_text_font(oald10DictSceneDetailLable, &lv_font_montserrat_12, LV_PART_MAIN | LV_STATE_DEFAULT);
+    //lv_label_set_recolor(oald10DictSceneDetailLable, 1);
     lv_obj_set_width(oald10DictSceneDetailLable, SIPI_SCREEN_WIDTH);
-    lv_label_set_text(oald10DictSceneDetailLable, "Designed by SendToSouthEast\nBased on ESP_IDF & LVGL");
+    lv_label_set_text(oald10DictSceneDetailLable, "Advanced Learner\'s Dictionary\nBeta version \nby YXY");
+    lv_obj_set_style_text_color(oald10DictSceneTitleLable, lv_palette_main(LV_PALETTE_BLUE), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_pos(oald10DictSceneDetailLable, 0, 20);
 
     dictInputArea = lv_textarea_create(oald10DictScene);
@@ -58,7 +59,7 @@ void oald10DictSceneQuitEvent(){
 
 void oald10DictSceneYESEvent(){
     oald10DictSceneQuitEvent();
-    wordSceneInit(inputShort);
+    oald10WordSceneInit(oald10DictInputShort);
 }
 
 void oald10DictSceneNOEvent(){
@@ -68,15 +69,15 @@ void oald10DictSceneNOEvent(){
 
 void oald10DictSceneInputEvent(char inputCharOrigin){
     if(inputCharOrigin == 0){ //删除键
-        if(inputShortCursor > 0){
-            inputShortCursor--;
-            inputShort[inputShortCursor] = '\0';
+        if(oald10DictInputShortCursor > 0){
+            oald10DictInputShortCursor--;
+            oald10DictInputShort[oald10DictInputShortCursor] = '\0';
             lv_textarea_del_char(dictInputArea);
         }
         return;
     }
-    //SIPI_LOGI(TAG, "inputShortCursor%d",inputShortCursor);
-    inputShort[inputShortCursor] = inputCharOrigin;
-    inputShortCursor++;
+    //SIPI_LOGI(TAG, "oald10DictInputShortCursor%d",oald10DictInputShortCursor);
+    oald10DictInputShort[oald10DictInputShortCursor] = inputCharOrigin;
+    oald10DictInputShortCursor++;
     lv_textarea_add_char(dictInputArea, inputCharOrigin);
 }

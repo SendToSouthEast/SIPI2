@@ -137,7 +137,7 @@ uint32_t dictFind(char* target, uint8_t thisDictScene){
     lv_fs_file_t f;
 	lv_fs_res_t res;
 
-    if(thisDictScene == SIPI_SCENE_dictScene){
+    if(thisDictScene == SIPI_SCENE_wordScene){
         res = lv_fs_open(&f, DICT_INDEX_PATH, LV_FS_MODE_RD);
     }
     else if(thisDictScene == SIPI_SCENE_oald10DictScene){
