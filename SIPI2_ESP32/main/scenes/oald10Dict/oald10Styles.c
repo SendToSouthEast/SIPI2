@@ -68,7 +68,7 @@ void oald10StylesInit(){
 
 
     lv_style_init(&sipi2_oald10_shcutline_style);
-    lv_style_set_border_side(&sipi2_oald10_shcutline_style, LV_BORDER_SIDE_BOTTOM);
+    lv_style_set_border_side(&sipi2_oald10_shcutline_style, LV_BORDER_SIDE_TOP);
     lv_style_set_border_color(&sipi2_oald10_shcutline_style, lv_color_make(199, 110, 6));
     lv_style_set_border_width(&sipi2_oald10_shcutline_style, 2);
 
@@ -79,7 +79,7 @@ void oald10StylesInit(){
 
     lv_style_init(&sipi2_oald10_idm_style);
     lv_style_set_text_font(&sipi2_oald10_idm_style, &lv_font_montserrat_12);
-    lv_style_set_text_color(&sipi2_oald10_idm_style, lv_palette_lighten(LV_PALETTE_BLUE));
+    lv_style_set_text_color(&sipi2_oald10_idm_style, lv_palette_lighten(LV_PALETTE_BLUE,3));
 
     lv_style_init(&sipi2_oald10_idmline_style);
     lv_style_set_border_side(&sipi2_oald10_idmline_style, LV_BORDER_SIDE_RIGHT);
@@ -98,10 +98,10 @@ void oald10StylesInit(){
 
     lv_style_init(&sipi2_oald10_pv_style);
     lv_style_set_text_font(&sipi2_oald10_pv_style, &lv_font_montserrat_12);
-    lv_style_set_text_color(&sipi2_oald10_pv_style, lv_palette_lighten(LV_PALETTE_BLUE));
+    lv_style_set_text_color(&sipi2_oald10_pv_style, lv_palette_main(LV_PALETTE_BLUE));
     lv_style_set_border_side(&sipi2_oald10_pv_style, LV_BORDER_SIDE_TOP);
-    lv_style_set_border_color(&sipi2_oald10_pv_style, lv_palette_lighten(LV_PALETTE_BLUE));
-    lv_style_set_border_width(&sipi2_oald10_pv_style, 1);
+    lv_style_set_border_color(&sipi2_oald10_pv_style, lv_palette_main(LV_PALETTE_BLUE));
+    lv_style_set_border_width(&sipi2_oald10_pv_style, 2);
     
 
 }
