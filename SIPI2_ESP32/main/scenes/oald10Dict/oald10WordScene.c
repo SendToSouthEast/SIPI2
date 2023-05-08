@@ -23,23 +23,21 @@ lv_obj_t * labelObj;
 void scrollEvent(lv_event_t event){
     lv_key_t key = lv_indev_get_key(lv_indev_get_act());
     // 获取按键符号对应的键值
-    if (key == LV_KEY_UP) {
+    if (key == LV_KEY_PREV) {
         lv_obj_scroll_by_bounded(labelObj,80,0,LV_ANIM_ON);
     }
-    if (key == LV_KEY_DOWN) {
+    if (key == LV_KEY_NEXT) {
         lv_obj_scroll_by_bounded(labelObj,-80,0,LV_ANIM_ON);
     }
 }
 
 void oald10WordSceneInit(char* target){
-    SIPI_LOGI(TAG, "oald10WordSceneInit");
+    SIPI_LOGI(TAG, "oald10WordSceneInit,%s",target);
     scene = SIPI_SCENE_oald10WordScene;
 
-    oald10WordScene = lv_obj_create(lv_scr_act());
+    oald10WordScene = lv_obj_create(NULL);
     lv_obj_remove_style_all(oald10WordScene);
     lv_obj_set_size(oald10WordScene, SIPI_SCREEN_WIDTH, SIPI_SCREEN_HEIGHT);
-
-
     
     oald10StylesInit();
 
@@ -47,24 +45,35 @@ void oald10WordSceneInit(char* target){
     oald10WordSeek = dictFind(target,SIPI_SCENE_oald10DictScene);
     SIPI_LOGI(TAG, "wordSeek:%d",oald10WordSeek);
     oald10Display(oald10WordSeek, 1);
+
+    lv_scr_load_anim(oald10WordScene,LV_SCR_LOAD_ANIM_NONE,10,0,true);
 }
 
 void oald10WordSceneQuitEvent(){
+    lv_obj_del(labelObj);
     lv_obj_del(oald10WordScene);
+    oald10StylesReset();
+
 }
 void oald10WordSceneYESEvent(){
-    oald10WordSceneQuitEvent();
-    esp_restart();
-    //oald10DictSceneInit();
+    lv_obj_del(labelObj);
+    oald10Display(oald10WordSeek, 2);
+
 }
 
 void oald10WordSceneNOEvent(){
-    lv_obj_del(labelObj);
-    oald10Display(oald10WordSeek, 2);
+    oald10WordSceneQuitEvent();
+    oald10DictSceneInit();
 }
+
+void oald10WordSceneInputEvent(char inputCharOrigin){
+
+}
+
+
 void oald10StrRead(uint32_t pos, lv_fs_file_t *olad10StrFile, char bufferText[]){
     lv_fs_seek(olad10StrFile, pos, LV_FS_SEEK_SET);
-    for(uint16_t i = 0;i<200;i++){
+    for(uint16_t i = 0;i<3000;i++){
 
         uint8_t buf[1];
         lv_fs_read(olad10StrFile, buf, 1, NULL);
@@ -134,12 +143,12 @@ void oald10Display(uint32_t seek, uint8_t page){
     lv_obj_add_event_cb(labelObj,scrollEvent,LV_EVENT_KEY,NULL);
 
     cJSON* cJSONobj;
-    char bufferText[200] = {0};
+    char bufferText[3000] = {0};
     uint32_t readSeek = 0;
-    char bufferJsonText[2000] = {0};
+    char bufferJsonText[15000] = {0};
 
     lv_fs_seek(&olad10MainFile, seek, LV_FS_SEEK_SET);
-    for(uint16_t i = 0;i<2000;i++){
+    for(uint16_t i = 0;i<15000;i++){
         uint8_t buf[1];
         lv_fs_read(&olad10MainFile, buf, 1, NULL);
         if(buf[0] == '\n' || buf[0] == 13 ){
@@ -208,7 +217,7 @@ void oald10Display(uint32_t seek, uint8_t page){
                 lv_label_set_text(bufferLabel, bufferText);
             }
         }
-        
+
     if(page == 1){
         // 读取cMean字段的值
         cJSONobj = cJSON_GetObjectItem(root, "cMean");
@@ -216,6 +225,7 @@ void oald10Display(uint32_t seek, uint8_t page){
             readSeek = cJSONobj->valueint;
             if(readSeek != 0){
                 oald10StrRead(readSeek, &olad10StrFile, bufferText);
+                SIPI_LOGI(TAG, "read cMean :%s",bufferText);
 
                 lv_obj_t *bufferLabel = lv_label_create(labelObj);
                 lv_obj_add_style(bufferLabel, &sipi2_oald10_chn_style,LV_PART_MAIN | LV_STATE_DEFAULT);
