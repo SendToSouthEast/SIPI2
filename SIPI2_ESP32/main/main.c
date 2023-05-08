@@ -22,6 +22,7 @@ void UIInit()
 {
     //oald10WordSceneInit("add to");
     //oald10DictSceneInit();
+    lv_obj_set_size(lv_obj_create(NULL), LV_HOR_RES, LV_VER_RES);
     mainSceneInit();
 }
 
@@ -81,6 +82,7 @@ void guiTask(void *p){
         vTaskDelay(pdMS_TO_TICKS(10));
         keyCheakTask();
         lv_task_handler();
+
     }
 
 }
@@ -216,7 +218,7 @@ void app_main(void)
 {
     UART2_INIT();
     //GPIO_INIT();
-    xTaskCreate(guiTask,"gui",1024*8,NULL,1,NULL);
+    xTaskCreate(guiTask,"gui",1024*16,NULL,1,NULL);
     xTaskCreate(keyBoardReadTask,"keyboard",1024*2,NULL,1,NULL);
 
 }

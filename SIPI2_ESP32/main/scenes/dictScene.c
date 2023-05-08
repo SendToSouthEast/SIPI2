@@ -16,7 +16,7 @@ void dictSceneInit(){
     scene = SIPI_SCENE_dictScene;
     for(int i = 0;i<21;i++){inputShort[i] = '\0';};
     inputShortCursor = 0;
-    dictScene = lv_obj_create(lv_scr_act());
+    dictScene = lv_obj_create(NULL);
     lv_obj_remove_style_all(dictScene);
     lv_obj_set_size(dictScene, SIPI_SCREEN_WIDTH, SIPI_SCREEN_HEIGHT);
 
@@ -49,10 +49,13 @@ void dictSceneInit(){
     lv_obj_set_style_bg_opa(hintBar, LV_OPA_50, LV_PART_MAIN | LV_STATE_DEFAULT); // 设置半透明
     lv_obj_set_style_text_font(hintBar, &lv_font_montserrat_12, 0);
     lv_label_set_text(hintBar, "LEFT: Search  RIGHT: Exit");
+
+
+    lv_scr_load_anim(dictScene,LV_SCR_LOAD_ANIM_NONE,10,0,true);
 }
 
 void dictSceneQuitEvent(){
-    lv_obj_del(dictScene);
+
 }
 
 void dictSceneYESEvent(){

@@ -103,5 +103,24 @@ void oald10StylesInit(){
     lv_style_set_border_color(&sipi2_oald10_pv_style, lv_palette_main(LV_PALETTE_BLUE));
     lv_style_set_border_width(&sipi2_oald10_pv_style, 2);
     
+}
+
+void oald10StylesReset(){
+    lv_style_reset(&sipi2_oald10_headword_style);
+    lv_style_reset(&sipi2_oald10_pos_style);
+    lv_style_reset(&sipi2_oald10_phon_style);
+    lv_style_reset(&sipi2_oald10_def_style);
+    lv_style_reset(&sipi2_oald10_senseline_style);
+    lv_style_reset(&sipi2_oald10_chn_style);
+    lv_style_reset(&sipi2_oald10_examples_style);
+    lv_style_reset(&sipi2_oald10_examplechn_style);
+    lv_style_reset(&sipi2_oald10_shcut_style);
+    lv_style_reset(&sipi2_oald10_shcutline_style);
+    lv_style_reset(&sipi2_oald10_idiomheading_style);
+    lv_style_reset(&sipi2_oald10_idm_style);
+    lv_style_reset(&sipi2_oald10_idmline_style);
+    lv_style_reset(&sipi2_oald10_grammar_style);
+    lv_style_reset(&sipi2_oald10_use_style);
+    lv_style_reset(&sipi2_oald10_pv_style);
 
 }

@@ -10,7 +10,7 @@ lv_obj_t * HIDScene;
 void HIDSceneInit(){
     SIPI_LOGI(TAG, "HIDSceneInit");
     scene = SIPI_SCENE_HIDScene;
-    HIDScene = lv_obj_create(lv_scr_act()); //创建scr;
+    HIDScene = lv_obj_create(NULL); //创建scr;
     lv_obj_remove_style_all(HIDScene);
     lv_obj_set_size(HIDScene, SIPI_SCREEN_WIDTH, SIPI_SCREEN_HEIGHT);
 
@@ -22,10 +22,12 @@ void HIDSceneInit(){
     lv_textarea_set_text(textArea, "Bluetooth keyboard mode");
 
     blueHIDInit();
+
+    lv_scr_load_anim(HIDScene,LV_SCR_LOAD_ANIM_NONE,10,0,true);
 }
 
 void HIDSceneQuitEvent(){
-    lv_obj_del(HIDScene);
+
 }
 
 void HIDSceneYESEvent(){

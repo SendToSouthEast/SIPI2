@@ -17,7 +17,7 @@ void oald10DictSceneInit(){
     scene = SIPI_SCENE_oald10DictScene;
     for(int i = 0;i<21;i++){oald10DictInputShort[i] = '\0';};
     oald10DictInputShortCursor = 0;
-    oald10DictScene = lv_obj_create(lv_scr_act());
+    oald10DictScene = lv_obj_create(NULL);
     lv_obj_remove_style_all(oald10DictScene);
     lv_obj_set_size(oald10DictScene, SIPI_SCREEN_WIDTH, SIPI_SCREEN_HEIGHT);
 
@@ -44,17 +44,19 @@ void oald10DictSceneInit(){
     lv_textarea_add_text(dictInputArea, "");
     lv_obj_add_state(dictInputArea, LV_STATE_FOCUSED);
 
-    lv_obj_t *hintBar = lv_label_create(oald10DictScene);
-    lv_obj_set_size(hintBar, SIPI_SCREEN_WIDTH, 12);
-    lv_obj_set_pos(hintBar, 0, SIPI_SCREEN_HEIGHT - 12);
-    lv_obj_set_style_bg_color(hintBar, lv_color_hex(0xC0C0C0), 0); // 设置深灰色背景
-    lv_obj_set_style_bg_opa(hintBar, LV_OPA_50, LV_PART_MAIN | LV_STATE_DEFAULT); // 设置半透明
-    lv_obj_set_style_text_font(hintBar, &lv_font_montserrat_12, 0);
-    lv_label_set_text(hintBar, "LEFT: Search  RIGHT: Exit");
+    // lv_obj_t *hintBar = lv_label_create(oald10DictScene);
+    // lv_obj_set_size(hintBar, SIPI_SCREEN_WIDTH, 12);
+    // lv_obj_set_pos(hintBar, 0, SIPI_SCREEN_HEIGHT - 12);
+    // lv_obj_set_style_bg_color(hintBar, lv_color_hex(0xC0C0C0), 0); // 设置深灰色背景
+    // lv_obj_set_style_bg_opa(hintBar, LV_OPA_50, LV_PART_MAIN | LV_STATE_DEFAULT); // 设置半透明
+    // lv_obj_set_style_text_font(hintBar, &lv_font_montserrat_12, 0);
+    // lv_label_set_text(hintBar, "LEFT: Search  RIGHT: Exit");
+
+    lv_scr_load_anim(oald10DictScene,LV_SCR_LOAD_ANIM_NONE,10,0,true);
 }
 
 void oald10DictSceneQuitEvent(){
-    lv_obj_del(oald10DictScene);
+    
 }
 
 void oald10DictSceneYESEvent(){

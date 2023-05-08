@@ -17,21 +17,22 @@ lv_obj_t * wordScene;
 lv_obj_t * meaningLabel;
 lv_obj_t * labelObj;
 lv_obj_t * wordLabel;
+lv_group_t * wordsceneGroup;
 
 void wordSceneInit(char* target){
     SIPI_LOGI(TAG, "wordSceneInit");
     scene = SIPI_SCENE_wordScene;
 
-    wordScene = lv_obj_create(lv_scr_act());
+    wordScene = lv_obj_create(NULL);
     lv_obj_remove_style_all(wordScene);
     lv_obj_set_size(wordScene, SIPI_SCREEN_WIDTH, SIPI_SCREEN_HEIGHT);
 
     labelObj = lv_obj_create(wordScene);
     lv_obj_remove_style_all(labelObj);
-    lv_obj_set_size(labelObj, SIPI_SCREEN_WIDTH, SIPI_SCREEN_HEIGHT - 12);
+    lv_obj_set_size(labelObj, SIPI_SCREEN_WIDTH, SIPI_SCREEN_HEIGHT);
 
 
-    lv_group_t * wordsceneGroup = lv_group_create();
+    wordsceneGroup = lv_group_create();
 #ifdef USEWINDOWS
     lv_indev_set_group(lv_win32_keypad_device_object, wordsceneGroup);
 #endif // WINDOWS
@@ -58,22 +59,25 @@ void wordSceneInit(char* target){
     lv_label_set_long_mode(wordLabel, LV_LABEL_LONG_WRAP);
     lv_obj_set_pos(wordLabel,0,0);
 
-    // 创建操作提示栏
-    lv_obj_t *hintBar = lv_label_create(wordScene);
-    lv_obj_set_size(hintBar, SIPI_SCREEN_WIDTH, 12);
-    lv_obj_set_pos(hintBar, 0, SIPI_SCREEN_HEIGHT - 12);
-    lv_obj_set_style_bg_color(hintBar, lv_color_hex(0xC0C0C0), 0); // 设置深灰色背景
-    lv_obj_set_style_bg_opa(hintBar, LV_OPA_50, LV_PART_MAIN | LV_STATE_DEFAULT); // 设置半透明
-    lv_obj_set_style_text_font(hintBar, &lv_font_montserrat_12, 0);
-    lv_label_set_text(hintBar, "LEFT: Exit  RIGHT: Exit");
+    // // 创建操作提示栏
+    // lv_obj_t *hintBar = lv_label_create(wordScene);
+    // lv_obj_set_size(hintBar, SIPI_SCREEN_WIDTH, 12);
+    // lv_obj_set_pos(hintBar, 0, SIPI_SCREEN_HEIGHT - 12);
+    // lv_obj_set_style_bg_color(hintBar, lv_color_hex(0xC0C0C0), 0); // 设置深灰色背景
+    // lv_obj_set_style_bg_opa(hintBar, LV_OPA_50, LV_PART_MAIN | LV_STATE_DEFAULT); // 设置半透明
+    // lv_obj_set_style_text_font(hintBar, &lv_font_montserrat_12, 0);
+    // lv_label_set_text(hintBar, "LEFT: Exit  RIGHT: Exit");
 
     SIPI_LOGI(TAG,"finding word: %s",target);
     uint32_t wordSeek = dictFind(target,scene);
     getWord(wordSeek);
+
+
+    lv_scr_load_anim(wordScene,LV_SCR_LOAD_ANIM_NONE,10,0,true);
 }
 
 void wordSceneQuitEvent(){
-    lv_obj_del(wordScene);
+    lv_group_del(wordsceneGroup);
 }
 void wordSceneYESEvent(){
     wordSceneQuitEvent();

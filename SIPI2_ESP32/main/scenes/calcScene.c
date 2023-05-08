@@ -17,7 +17,7 @@ void calcSceneInit(){
     scene = SIPI_SCENE_calcScene;
     for(int i = 0;i<21;i++){calcInputShort[i] = '\0';};
     calcInputShortCursor = 0;
-    calcScene = lv_obj_create(lv_scr_act());
+    calcScene = lv_obj_create(NULL);
     lv_obj_remove_style_all(calcScene);
     lv_obj_set_size(calcScene, SIPI_SCREEN_WIDTH, SIPI_SCREEN_HEIGHT);
 
@@ -44,13 +44,15 @@ void calcSceneInit(){
     lv_textarea_add_text(calcInputArea, "");
     lv_obj_add_state(calcInputArea, LV_STATE_FOCUSED);
 
-    lv_obj_t *hintBar = lv_label_create(calcScene);
-    lv_obj_set_size(hintBar, SIPI_SCREEN_WIDTH, 12);
-    lv_obj_set_pos(hintBar, 0, SIPI_SCREEN_HEIGHT - 12);
-    lv_obj_set_style_bg_color(hintBar, lv_color_hex(0xC0C0C0), 0); // 设置深灰色背景
-    lv_obj_set_style_bg_opa(hintBar, LV_OPA_50, LV_PART_MAIN | LV_STATE_DEFAULT); // 设置半透明
-    lv_obj_set_style_text_font(hintBar, &lv_font_montserrat_12, 0);
-    lv_label_set_text(hintBar, "LEFT: Count  RIGHT: Exit");
+    // lv_obj_t *hintBar = lv_label_create(calcScene);
+    // lv_obj_set_size(hintBar, SIPI_SCREEN_WIDTH, 12);
+    // lv_obj_set_pos(hintBar, 0, SIPI_SCREEN_HEIGHT - 12);
+    // lv_obj_set_style_bg_color(hintBar, lv_color_hex(0xC0C0C0), 0); // 设置深灰色背景
+    // lv_obj_set_style_bg_opa(hintBar, LV_OPA_50, LV_PART_MAIN | LV_STATE_DEFAULT); // 设置半透明
+    // lv_obj_set_style_text_font(hintBar, &lv_font_montserrat_12, 0);
+    // lv_label_set_text(hintBar, "LEFT: Count  RIGHT: Exit");
+
+    lv_scr_load_anim(calcScene,LV_SCR_LOAD_ANIM_NONE,10,0,true);
 }
 
 void calcTask(void *p)
@@ -68,7 +70,7 @@ void calcTask(void *p)
 }
 
 void calcSceneQuitEvent(){
-    lv_obj_del(calcScene);
+
 }
 
 void calcSceneYESEvent(){
