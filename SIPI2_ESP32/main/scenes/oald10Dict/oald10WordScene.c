@@ -22,11 +22,13 @@ lv_obj_t * labelObj;
 
 void scrollEvent(lv_event_t event){
     lv_key_t key = lv_indev_get_key(lv_indev_get_act());
+    SIPI_LOGI(TAG, "LV_KEY,%d",key);
     // 获取按键符号对应的键值
-    if (key == LV_KEY_PREV) {
-        lv_obj_scroll_by_bounded(labelObj,80,0,LV_ANIM_ON);
+    if (key == LV_KEY_UP) {
+        SIPI_LOGI(TAG, "LV_KEY_PREV:%d",lv_obj_get_scroll_top(labelObj));
+        lv_obj_scroll_by_bounded(labelObj,180,0,LV_ANIM_ON);
     }
-    if (key == LV_KEY_NEXT) {
+    if (key == LV_KEY_DOWN) {
         lv_obj_scroll_by_bounded(labelObj,-80,0,LV_ANIM_ON);
     }
 }

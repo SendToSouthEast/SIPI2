@@ -46,7 +46,7 @@
         "strstream": "c"
     },
     "idf.adapterTargetName": "esp32",
-    "idf.portWin": "COM4",
+    "idf.portWin": "COM3",
     "idf.flashType": "UART",
     "cmake.configureOnOpen": true,
     "C_Cpp.errorSquiggles": "disabled"

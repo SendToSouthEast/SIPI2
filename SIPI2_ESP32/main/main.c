@@ -27,6 +27,52 @@ void UIInit()
 }
 
 
+lv_obj_t* scr;
+lv_obj_t* scr1;
+
+void win_test1(void)
+ {
+     scr = lv_obj_create(NULL);
+     lv_obj_set_size(scr, LV_HOR_RES, LV_VER_RES);
+     static lv_style_t style;
+     lv_style_reset(&style);
+     lv_style_init(&style);
+     lv_style_set_bg_color(&style, lv_palette_main(LV_PALETTE_RED));
+     lv_style_set_text_color(&style, lv_color_white());
+     lv_obj_add_style(scr, &style,NULL);
+
+     lv_obj_t* label = lv_label_create(scr);
+     lv_obj_set_style_text_color(label, lv_color_hex(0x990000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    
+
+     lv_label_set_text(label, "This is a test 1");
+
+     lv_scr_load_anim(scr, LV_SCR_LOAD_ANIM_FADE_ON, 400, 0, true);
+     printf("win test 1 is created ");
+ }
+
+ void win_test2(void)
+ {
+     scr1 = lv_obj_create(NULL);
+     lv_obj_set_size(scr1, LV_HOR_RES, LV_VER_RES);
+     static lv_style_t style;
+     lv_style_reset(&style);
+     lv_style_init(&style);
+     lv_style_set_bg_color(&style, lv_palette_main(LV_PALETTE_BLUE));
+     lv_style_set_text_color(&style, lv_color_white());
+     
+     lv_obj_add_style(scr1, &style,NULL);
+
+     lv_obj_t* label = lv_label_create(scr1);
+     lv_obj_set_style_text_color(label, lv_color_hex(0x990000), LV_PART_MAIN | LV_STATE_DEFAULT);
+
+     lv_label_set_text(label, "This is a test 2");
+     
+     lv_scr_load_anim(scr1, LV_SCR_LOAD_ANIM_FADE_ON, 0, 0,true);
+     printf("win test 2 is created ");
+ }
+
+
 void lv_tick_task(void *arg)
 {
     lv_tick_inc(1);
@@ -82,6 +128,22 @@ void guiTask(void *p){
         vTaskDelay(pdMS_TO_TICKS(10));
         keyCheakTask();
         lv_task_handler();
+
+        // static uint16_t i;
+        // if (++i > 100) {
+        //     i = 0;
+        //     static bool flag;
+        //     if (flag)
+        //     {
+        //         flag = false;
+        //         win_test2();
+        //     }
+        //     else
+        //     {
+        //         flag = true;
+        //         win_test1();
+        //     }
+        // }
 
     }
 
@@ -218,7 +280,7 @@ void app_main(void)
 {
     UART2_INIT();
     //GPIO_INIT();
-    xTaskCreate(guiTask,"gui",1024*16,NULL,1,NULL);
+    xTaskCreate(guiTask,"gui",1024*32,NULL,1,NULL);
     xTaskCreate(keyBoardReadTask,"keyboard",1024*2,NULL,1,NULL);
 
 }
